@@ -1,4 +1,4 @@
-#Stack of technologies:
+# Stack of technologies:
 * Java 8 (functional interface, lambda, stream api, new collection api, new concurrency api)
 * Git
 * Maven
@@ -22,7 +22,7 @@
 * Mapstruct
 * Lombok
 
-#Business requirements:
+# Business requirements:
 * CRUD warehouse
 * CRUD item
 * Client management
