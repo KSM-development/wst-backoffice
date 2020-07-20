@@ -1,2 +1,12 @@
 server:
   port: 8081
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/db_wst
+    username: admin_wst
+    password: wst!#4pas@*
+  jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+    show-sql: true
