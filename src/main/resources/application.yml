@@ -2,17 +2,11 @@ server:
   port: 8081
 spring:
   datasource:
-    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/db_wst
     username: admin_wst
     password: wst!#4pas@*
-    url: jdbc:postgresql://localhost:5432/db_wst
-    platform: postgres
-    initialization-mode: always
   jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
     show-sql: true
-    hibernate.ddl-auto: none
-    database-platform: org.hibernate.dialect.PostgreSQL94Dialect
-    properties:
-      hibernate:
-        temp:
-          use_jdbc_metadata_defaults: false
