@@ -27,3 +27,9 @@
 * CRUD item
 * Client management
 * User management
+
+# Developers
+* Sergiy Krokhmalniy [github](https://github.com/SerjiKSM)
+* Oleg Pinta [github](https://github.com/Sabfir)
+* Andriy Plytka [github](https://github.com/AndreyPlytka)
+* Alexandra Plytka  [github](https://github.com/AlexandraPlytka)
