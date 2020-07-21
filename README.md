@@ -1,4 +1,4 @@
-# World shop trade
+# World shop trade(WST)
 
 ## Stack of technologies:
 * Java 8 (functional interface, lambda, stream api, new collection api, new concurrency api)
