@@ -1,5 +1,8 @@
-package com.ksm.wstbackoffice.enums;
+package com.ksm.wstbackoffice.enumeration;
 
+import lombok.Getter;
+
+@Getter
 public enum PriceType {
     RETAIL("Retail"),
     WHOLESALE("Wholesale");
