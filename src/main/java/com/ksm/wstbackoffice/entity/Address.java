@@ -1,17 +1,17 @@
 package com.ksm.wstbackoffice.entity;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
-@EqualsAndHashCode
+@Data
 public class Address {
+    private long id;
     private Country country;
-    private City city;
+    private String zipcode;
+    private String region;
+    private String district;
+    private String city;
     private String street;
-    private String zipCode;
-    private String buildingNumber;
-    private String state;
+    private String houseNumber;
+    private String apartmentNumber;
+    private String description;
 }

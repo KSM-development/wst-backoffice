@@ -1,12 +1,9 @@
 package com.ksm.wstbackoffice.entity;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
-@EqualsAndHashCode
+@Data
 public class Country {
-    private String title;
+    private String ISO3166;
+    private String name;
 }
