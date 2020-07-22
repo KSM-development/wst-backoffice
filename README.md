@@ -1,4 +1,6 @@
-# Stack of technologies:
+# World shop trade(WST)
+
+## Stack of technologies:
 * Java 8 (functional interface, lambda, stream api, new collection api, new concurrency api)
 * Git
 * Maven
@@ -22,8 +24,21 @@
 * Mapstruct
 * Lombok
 
-# Business requirements:
+## Business requirements:
 * CRUD warehouse
 * CRUD item
 * Client management
 * User management
+
+## Developers
+* Sergiy Krokhmalniy [github](https://github.com/SerjiKSM)
+* Oleg Pinta [github](https://github.com/Sabfir)
+* Andriy Plytka [github](https://github.com/AndreyPlytka)
+* Alexandra Plytka  [github](https://github.com/AlexandraPlytka)
+
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+Please make sure to update tests as appropriate.
+
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
