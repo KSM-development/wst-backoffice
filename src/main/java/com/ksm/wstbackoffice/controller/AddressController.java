@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/address-management")
+@RequestMapping(value = "/addresses")
 public class AddressController {
     private AddressService addressService;
 
@@ -21,21 +21,21 @@ public class AddressController {
         this.addressService = addressService;
     }
 
-    @GetMapping(value="/addresses")
+    @GetMapping("/addresses")
     public ResponseEntity<List<Address>> findAll() {
         List<Address> addresses = addressService.findAll();
         return ResponseEntity.status(HttpStatus.OK)
                 .body(addresses);
     }
 
-    @GetMapping(value="/addresses/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Address> findById(@PathVariable long id) {
         Address address = addressService.findById(id);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(address);
     }
 
-    @PostMapping(value="/addresses")
+    @PostMapping("/addresses")
     public ResponseEntity<Address> add(@RequestBody Address entityAddress) {
         Address address = addressService.save(entityAddress);
         return ResponseEntity.status(HttpStatus.CREATED)
