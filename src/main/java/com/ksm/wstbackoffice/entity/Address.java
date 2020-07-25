@@ -17,7 +17,7 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @ManyToOne(optional=false, cascade= CascadeType.ALL)
-    @JoinColumn(name="country_id")
+    @JoinColumn(name="country_iso3166")
     private Country country;
     @Column(name = "zipcode", columnDefinition = "VARCHAR(15)")
     private String zipcode;
