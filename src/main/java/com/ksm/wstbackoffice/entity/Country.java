@@ -9,8 +9,8 @@ import javax.persistence.Id;
 @Data
 public class Country {
     @Id
-    @Column(name = "iso3166", columnDefinition = "VARCHAR(3)")
+    @Column(columnDefinition = "VARCHAR(3)")
     private String ISO3166;
-    @Column(name = "name", columnDefinition = "VARCHAR(255)")
+    @Column(columnDefinition = "VARCHAR(255)")
     private String name;
 }
