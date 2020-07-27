@@ -16,4 +16,8 @@ public class CountryService {
     public List<Country> findAll() {
         return countryRepository.findAll();
     }
+
+    public Country findById(String id) {
+        return countryRepository.findById(id).orElse(null);
+    }
 }
