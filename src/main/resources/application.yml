@@ -1,5 +1,7 @@
+local.protocol: http://
 server:
   port: 8081
+  address: localhost
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/db_wst
