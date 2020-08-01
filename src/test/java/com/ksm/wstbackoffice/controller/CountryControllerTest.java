@@ -1,59 +1,48 @@
 package com.ksm.wstbackoffice.controller;
 
+import io.restassured.RestAssured;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
 
 import static io.restassured.RestAssured.given;
-import static io.restassured.http.ContentType.JSON;
 import static org.hamcrest.Matchers.is;
 
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
+@ActiveProfiles("test")
 public class CountryControllerTest {
     @Value("${server.port}")
     private int port;
 
-    @Value("${server.address}")
-    private String address;
-
-    @Value("${local.protocol}")
-    private String protocol;
-
     @Test
     public void findByIdTest() {
         given()
-                .accept(JSON)
-                .pathParam("iso3166", "065")
+                .baseUri(RestAssured.DEFAULT_URI)
+                .port(port)
+                .basePath("/countries/{iso3166}")
+                .pathParam("iso3166", "061")
                 .when()
-                .get(String.valueOf(new StringBuilder()
-                        .append(protocol)
-                        .append(address)
-                        .append(":")
-                        .append(port)
-                        .append("/countries/{iso3166}")))
+                .get()
                 .then()
-                .statusCode(200)
                 .body(
-                        "iso3166", is("065")
+                        "iso3166", is("061")
                 )
-                .log()
-                .all();
+                .statusCode(200);
     }
 
     @Test
     public void findAllTest() {
         given()
+                .baseUri(RestAssured.DEFAULT_URI)
+                .port(port)
+                .basePath("/countries")
                 .when()
-                .get(String.valueOf(new StringBuilder()
-                        .append(protocol)
-                        .append(address)
-                        .append(":")
-                        .append(port)
-                        .append("/countries")))
+                .get()
                 .then()
-                .statusCode(200)
-                .log()
-                .all();
+                .body("isEmpty()", Matchers.is(false))
+                .statusCode(200);
     }
 }
