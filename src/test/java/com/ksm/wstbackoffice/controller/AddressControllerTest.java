@@ -11,9 +11,7 @@ import io.restassured.specification.RequestSpecification;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeAll;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.util.HashMap;
 import java.util.List;
@@ -22,19 +20,18 @@ import java.util.Map;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 @SpringBootTest
-@ActiveProfiles("test")
 public class AddressControllerTest {
 
     private static RequestSpecification spec;
 
-    @BeforeAll
-    public static void initSpec() {
+    public AddressControllerTest() {
         spec = new RequestSpecBuilder()
                 .setContentType(JSON)
                 .setBaseUri(RestAssured.DEFAULT_URI)
-                .setPort(EndPoint.port)
+                .setPort(EndPoint.PORT)
                 .addFilter(new ResponseLoggingFilter())
                 .addFilter(new RequestLoggingFilter())
                 .build();
@@ -42,33 +39,30 @@ public class AddressControllerTest {
 
     @Test
     public void findByIdTest() {
-        Address address = given()
-                .spec(spec)
-                .pathParam("id", 1)
-                .when()
-                .get(EndPoint.addressesWithId)
-                .then()
-                .statusCode(200)
-                .extract()
-                .body()
-                .as(Address.class);
-
-        Assert.assertNotNull(address);
-        assertThat(address.getId(), Matchers.is(1L));
+        given()
+            .spec(spec)
+            .pathParam("id", 1)
+        .when()
+            .get(EndPoint.ADDRESSES_ID)
+        .then()
+            .statusCode(200)
+            .body("id", equalTo(1))
+            .and()
+            .body("country.iso3166", equalTo("804"));
     }
 
     @Test
     public void findAllTest() {
-        List<Address> addresses = given()
-                .spec(spec)
+        List<Address> addresses =
+                given()
+                    .spec(spec)
                 .when()
-                .get(EndPoint.addresses)
+                    .get(EndPoint.ADDRESSES)
                 .then()
-                .statusCode(200)
+                    .statusCode(200)
                 .extract()
-                .body()
-                .as(new TypeRef<List<Address>>() {
-                });
+                    .body()
+                    .as(new TypeRef<List<Address>>(){});
 
         Assert.assertNotNull(addresses);
         assertThat(addresses.size(), Matchers.greaterThanOrEqualTo(0));
@@ -77,29 +71,30 @@ public class AddressControllerTest {
     @Test
     public void createTest() {
         Map<String, Object> country = new HashMap<>();
-        country.put("iso3166", "061");
-        country.put("name", "Бермуды 061");
+        country.put("iso3166", "076");
+        country.put("name", "Brazil");
 
         Map<String, Object> address = new HashMap<>();
-        address.put("zipcode", "zipcode1");
-        address.put("region", "region1");
-        address.put("district", "district1");
-        address.put("city", "city1");
-        address.put("street", "street1");
-        address.put("houseNumber", "1a");
-        address.put("apartmentNumber", "11");
-        address.put("description", "description1");
+        address.put("zipcode", "13010");
+        address.put("region", "Brazil region");
+        address.put("district", "Brazil district");
+        address.put("city", "Rio de Janeiro");
+        address.put("street", "Rio Carnival");
+        address.put("houseNumber", "8a");
+        address.put("apartmentNumber", "89");
+        address.put("description", "Brazil address description");
         address.put("country", country);
 
-        Address retrievedAddress = given()
-                .spec(spec)
-                .body(address)
+        Address retrievedAddress =
+                given()
+                    .spec(spec)
+                    .body(address)
                 .when()
-                .post(EndPoint.addresses)
+                    .post(EndPoint.ADDRESSES)
                 .then()
-                .statusCode(201)
+                    .statusCode(201)
                 .extract()
-                .as(Address.class);
+                    .as(Address.class);
 
         Assert.assertNotNull(retrievedAddress);
         Assert.assertNotNull(retrievedAddress.getId());
