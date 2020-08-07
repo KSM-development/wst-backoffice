@@ -29,7 +29,7 @@ public class CountryControllerTest {
     private int port;
 
     @BeforeEach
-    public void setup() throws Exception {
+    public void setup() {
         RestAssured.port = port;
     }
 
