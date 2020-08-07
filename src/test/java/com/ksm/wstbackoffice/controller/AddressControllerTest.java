@@ -23,7 +23,7 @@ import static org.hamcrest.Matchers.equalTo;
         @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts="classpath:sql/addressInsert.sql"),
         @Sql(executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD, scripts="classpath:sql/addressDrop.sql")
 })
-@ActiveProfiles("test")
+@ActiveProfiles("test-h2")
 public class AddressControllerTest {
 
     @LocalServerPort

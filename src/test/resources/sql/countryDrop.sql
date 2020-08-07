@@ -1,1 +1,1 @@
-DROP TABLE country;
+DROP TABLE IF EXISTS country CASCADE;

@@ -21,7 +21,7 @@ import org.springframework.test.context.jdbc.SqlGroup;
         @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts="classpath:sql/countryInsert.sql"),
         @Sql(executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD, scripts="classpath:sql/countryDrop.sql")
 })
-@ActiveProfiles("test")
+@ActiveProfiles("test-h2")
 public class CountryControllerTest {
 
     @LocalServerPort
