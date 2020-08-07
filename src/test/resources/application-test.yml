@@ -8,3 +8,14 @@ spring:
     generate-ddl: true
     hibernate:
       ddl-auto: create
+
+logging:
+  #  log4jdbc: shows us jdbc statements with parameters and batching
+  level:
+    jdbc:
+      sqlonly: info
+      resultsettable: fatal
+      sqltiming: fatal
+      audit: fatal
+      resultset: fatal
+      connection: fatal
