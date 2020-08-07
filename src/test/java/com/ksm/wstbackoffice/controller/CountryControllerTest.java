@@ -2,47 +2,40 @@ package com.ksm.wstbackoffice.controller;
 
 import com.ksm.wstbackoffice.endpoint.EndPoint;
 import io.restassured.RestAssured;
-import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.filter.log.RequestLoggingFilter;
-import io.restassured.filter.log.ResponseLoggingFilter;
-import io.restassured.specification.RequestSpecification;
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 
 import static io.restassured.RestAssured.given;
-import static io.restassured.http.ContentType.JSON;
+import static io.restassured.RestAssured.when;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 
-@SpringBootTest
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @SqlGroup({
         @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts="classpath:sql/countryInsert.sql"),
         @Sql(executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD, scripts="classpath:sql/countryDrop.sql")
 })
 @ActiveProfiles("test")
 public class CountryControllerTest {
+    @LocalServerPort
+    private int port;
 
-    private static RequestSpecification spec;
-
-    public CountryControllerTest() {
-        spec = new RequestSpecBuilder().
-                setContentType(JSON).
-                setBaseUri(RestAssured.DEFAULT_URI).
-                setPort(EndPoint.PORT).
-                addFilter(new ResponseLoggingFilter()).
-                addFilter(new RequestLoggingFilter()).
-                build();
+    @BeforeEach
+    public void setup() throws Exception {
+        RestAssured.port = port;
     }
 
     @Test
     public void findByIdTest() {
         given().
-            spec(spec).
             pathParam("iso3166", "060").
         when().
             get(EndPoint.COUNTRY_ID).
@@ -53,8 +46,6 @@ public class CountryControllerTest {
 
     @Test
     public void findAllTest() {
-        given().
-            spec(spec).
         when().
             get(EndPoint.COUNTRIES).
         then().

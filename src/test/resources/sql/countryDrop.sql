@@ -1,1 +1,1 @@
-DROP TABLE country;
+delete from country;

@@ -1,10 +1,10 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/db_wst_test
-    username: admin_wst
-    password: wst!#4pas@*
+    url: "jdbc:h2:mem:omp;MODE=PostgreSQL;DB_CLOSE_ON_EXIT=FALSE;DB_CLOSE_DELAY=-1;DATABASE_TO_LOWER=true;"
+    driver-class-name: org.h2.Driver
   jpa:
-    generate-ddl: false
-    hibernate:
-      ddl-auto: none
+    database-platform: org.hibernate.dialect.H2Dialect
     show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create
