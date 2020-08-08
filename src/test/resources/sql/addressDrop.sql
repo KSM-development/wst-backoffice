@@ -1,2 +1,2 @@
-DROP TABLE address;
-DROP TABLE country;
+DELETE FROM address;
+DELETE FROM country;

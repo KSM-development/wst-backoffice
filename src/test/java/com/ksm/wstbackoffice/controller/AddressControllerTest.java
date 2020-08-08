@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.when;
 import static org.hamcrest.Matchers.equalTo;
 
 @SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -48,7 +49,6 @@ public class AddressControllerTest {
 
     @Test
     public void findAllTest() {
-        RestAssured.
         when().
             get(EndPoint.ADDRESSES).
         then().

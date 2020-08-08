@@ -1,1 +1,1 @@
-DROP TABLE IF EXISTS country CASCADE;
+DELETE FROM country;
