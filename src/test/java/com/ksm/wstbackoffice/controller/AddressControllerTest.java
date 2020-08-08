@@ -48,7 +48,7 @@ public class AddressControllerTest {
 
     @Test
     public void findAllTest() {
-        given().
+        RestAssured.
         when().
             get(EndPoint.ADDRESSES).
         then().

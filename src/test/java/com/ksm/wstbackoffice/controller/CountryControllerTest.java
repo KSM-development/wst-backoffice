@@ -45,7 +45,7 @@ public class CountryControllerTest {
 
     @Test
     public void findAllTest() {
-        given().
+        RestAssured.
         when().
             get(EndPoint.COUNTRIES).
         then().
