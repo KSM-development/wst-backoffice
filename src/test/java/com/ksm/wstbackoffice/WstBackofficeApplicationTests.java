@@ -1,10 +1,9 @@
 package com.ksm.wstbackoffice;
 
+import com.ksm.wstbackoffice.controller.BaseController;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class WstBackofficeApplicationTests {
+class WstBackofficeApplicationTests extends BaseController {
 
 	@Test
 	void contextLoads() {
