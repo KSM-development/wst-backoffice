@@ -1,6 +1,5 @@
 package com.ksm.wstbackoffice.controller;
 
-import com.ksm.wstbackoffice.endpoint.EndPoint;
 import io.restassured.http.ContentType;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -13,10 +12,11 @@ import java.util.Map;
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.notNullValue;
 
 @SqlGroup({
         @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts="classpath:sql/addressInsert.sql"),
-        @Sql(executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD, scripts="classpath:sql/addressDrop.sql")
+        @Sql(executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD, scripts="classpath:sql/addressDelete.sql")
 })
 public class AddressControllerIT extends BaseControllerIT {
     @Test
@@ -24,7 +24,7 @@ public class AddressControllerIT extends BaseControllerIT {
         given().
             pathParam("id", 1).
         when().
-            get(EndPoint.ADDRESSES_ID).
+            get("addresses/{id}").
         then().
             statusCode(200).
             body("id", equalTo(1)).
@@ -34,11 +34,10 @@ public class AddressControllerIT extends BaseControllerIT {
     @Test
     public void findAllTest() {
         when().
-            get(EndPoint.ADDRESSES).
+            get("addresses").
         then().
             statusCode(200).
-            body("isEmpty()", Matchers.is(false)).
-            body("size()", equalTo(4));
+            body("isEmpty()", Matchers.is(false));
     }
 
     @Test
@@ -62,9 +61,13 @@ public class AddressControllerIT extends BaseControllerIT {
             contentType(ContentType.JSON).
             body(address).
         when().
-            post(EndPoint.ADDRESSES).
+            post("addresses").
         then().
             statusCode(201).
-            body("id", equalTo(5));
+            body("id", notNullValue()).
+            body("region", equalTo("Brazil region")).
+            body("district", equalTo("Brazil district")).
+            body("city", equalTo("Rio de Janeiro"));
+
     }
 }

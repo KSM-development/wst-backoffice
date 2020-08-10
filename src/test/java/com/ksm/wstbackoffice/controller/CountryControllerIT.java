@@ -1,12 +1,10 @@
 package com.ksm.wstbackoffice.controller;
 
-import com.ksm.wstbackoffice.endpoint.EndPoint;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
-import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 import org.springframework.test.context.jdbc.Sql;
@@ -14,7 +12,7 @@ import org.springframework.test.context.jdbc.SqlGroup;
 
 @SqlGroup({
         @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts="classpath:sql/countryInsert.sql"),
-        @Sql(executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD, scripts="classpath:sql/countryDrop.sql")
+        @Sql(executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD, scripts="classpath:sql/countryDelete.sql")
 })
 public class CountryControllerIT extends BaseControllerIT {
 
@@ -23,7 +21,7 @@ public class CountryControllerIT extends BaseControllerIT {
         given().
             pathParam("iso3166", "060").
         when().
-            get(EndPoint.COUNTRY_ID).
+            get("countries/{iso3166}").
         then().
             statusCode(200).
             body("iso3166", is("060"), "name", is("Bermuda"));
@@ -32,10 +30,9 @@ public class CountryControllerIT extends BaseControllerIT {
     @Test
     public void findAllTest() {
         when().
-            get(EndPoint.COUNTRIES).
+            get("countries").
         then().
             statusCode(200).
-            body("isEmpty()", Matchers.is(false)).
-            body("size()", equalTo(5));
+            body("isEmpty()", Matchers.is(false));
     }
 }
