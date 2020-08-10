@@ -36,7 +36,7 @@ public class AddressController {
     }
 
     @PostMapping
-    public ResponseEntity<Address> add(@RequestBody Address entityAddress) {
+    public ResponseEntity<Address> create(@RequestBody Address entityAddress) {
         Address address = addressService.save(entityAddress);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(address);
