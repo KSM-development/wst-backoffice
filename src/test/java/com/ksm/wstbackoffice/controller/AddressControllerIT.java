@@ -1,7 +1,7 @@
 package com.ksm.wstbackoffice.controller;
 
 import io.restassured.http.ContentType;
-import org.hamcrest.Matchers;
+import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
@@ -37,7 +37,7 @@ public class AddressControllerIT extends BaseControllerIT {
             get("addresses").
         then().
             statusCode(200).
-            body("isEmpty()", Matchers.is(false));
+            body("size()", CoreMatchers.equalTo(4));
     }
 
     @Test

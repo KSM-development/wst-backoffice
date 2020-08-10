@@ -1,10 +1,10 @@
 package com.ksm.wstbackoffice.controller;
 
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 import org.springframework.test.context.jdbc.Sql;
@@ -33,6 +33,6 @@ public class CountryControllerIT extends BaseControllerIT {
             get("countries").
         then().
             statusCode(200).
-            body("isEmpty()", Matchers.is(false));
+            body("size()", equalTo(5));
     }
 }
