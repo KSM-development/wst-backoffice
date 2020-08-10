@@ -18,7 +18,7 @@ import static org.hamcrest.Matchers.equalTo;
         @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts="classpath:sql/addressInsert.sql"),
         @Sql(executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD, scripts="classpath:sql/addressDrop.sql")
 })
-public class AddressControllerTest extends BaseController {
+public class AddressControllerIT extends BaseControllerIT {
     @Test
     public void findByIdTest() {
         given().
