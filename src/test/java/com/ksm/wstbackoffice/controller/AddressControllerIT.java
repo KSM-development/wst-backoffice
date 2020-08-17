@@ -28,7 +28,7 @@ public class AddressControllerIT extends BaseControllerIT {
                 Arguments.of(1L, 200),
                 Arguments.of(-1L, 400),
                 Arguments.of(0L, 400),
-                Arguments.of(999999999999999999L, 404)
+                Arguments.of(Long.MAX_VALUE, 404)
         );
     }
 
