@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping(value = "countries")
@@ -29,7 +30,14 @@ public class CountryController {
 
     @GetMapping("{id}")
     public ResponseEntity<Country> findById(@PathVariable String id) {
+        if (!Pattern.matches("[0-9]{3}", id))
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+
         Country country = countryService.findById(id);
+
+        if (country == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+
         return ResponseEntity.status(HttpStatus.OK)
                 .body(country);
     }
