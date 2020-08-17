@@ -30,7 +30,16 @@ public class AddressController {
 
     @GetMapping("{id}")
     public ResponseEntity<Address> findById(@PathVariable long id) {
+        if (id < 1) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+
         Address address = addressService.findById(id);
+
+        if (address == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+
         return ResponseEntity.status(HttpStatus.OK)
                 .body(address);
     }

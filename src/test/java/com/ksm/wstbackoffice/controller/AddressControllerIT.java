@@ -3,11 +3,15 @@ package com.ksm.wstbackoffice.controller;
 import io.restassured.http.ContentType;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
@@ -19,16 +23,24 @@ import static org.hamcrest.Matchers.notNullValue;
         @Sql(executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD, scripts="classpath:sql/addressDelete.sql")
 })
 public class AddressControllerIT extends BaseControllerIT {
-    @Test
-    public void findByIdTest() {
+    public static Stream<Arguments> findByIdTestArguments() {
+        return Stream.of(
+                Arguments.of(1L, 200),
+                Arguments.of(-1L, 400),
+                Arguments.of(0L, 400),
+                Arguments.of(Long.MAX_VALUE, 404)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("findByIdTestArguments")
+    public void findByIdTest(Long id, int expectedStatus) {
         given().
-            pathParam("id", 1).
+            pathParam("id", id).
         when().
             get("addresses/{id}").
         then().
-            statusCode(200).
-            body("id", equalTo(1)).
-            body("country.iso3166", equalTo("804"));
+            statusCode(expectedStatus);
     }
 
     @Test
