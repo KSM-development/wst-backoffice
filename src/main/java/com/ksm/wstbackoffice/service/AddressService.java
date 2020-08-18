@@ -25,7 +25,8 @@ public class AddressService {
         return addressMapper.toDto(addressRepository.findById(id).orElse(null));
     }
 
-    public AddressDto save(AddressEntity addressEntity) {
+    public AddressDto save(AddressDto addressDto) {
+        AddressEntity addressEntity = addressMapper.toEntity(addressDto);
         return addressMapper.toDto(addressRepository.save(addressEntity));
     }
 }

@@ -1,7 +1,6 @@
 package com.ksm.wstbackoffice.controller;
 
 import com.ksm.wstbackoffice.dto.AddressDto;
-import com.ksm.wstbackoffice.entity.AddressEntity;
 import com.ksm.wstbackoffice.service.AddressService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,8 +45,8 @@ public class AddressController {
     }
 
     @PostMapping
-    public ResponseEntity<AddressDto> create(@RequestBody AddressEntity addressEntity) {
-        AddressDto address = addressService.save(addressEntity);
+    public ResponseEntity<AddressDto> create(@RequestBody AddressDto addressDto) {
+        AddressDto address = addressService.save(addressDto);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(address);
     }

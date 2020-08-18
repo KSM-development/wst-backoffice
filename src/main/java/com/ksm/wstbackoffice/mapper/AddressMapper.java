@@ -10,7 +10,9 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface AddressMapper {
     @Mapping(source = "country.ISO3166", target = "countryISO3166")
-    AddressDto toDto(AddressEntity addressEntity);
-    List<AddressDto> toDTOs(List<AddressEntity> addressEntities);
-    AddressEntity toEntity(AddressDto addressDto);
+    AddressDto toDto(AddressEntity entity);
+
+    List<AddressDto> toDTOs(List<AddressEntity> entities);
+
+    AddressEntity toEntity(AddressDto dto);
 }
