@@ -1,6 +1,8 @@
 package com.ksm.wstbackoffice.service;
 
-import com.ksm.wstbackoffice.entity.Address;
+import com.ksm.wstbackoffice.dto.AddressDto;
+import com.ksm.wstbackoffice.entity.AddressEntity;
+import com.ksm.wstbackoffice.mapper.AddressMapper;
 import com.ksm.wstbackoffice.repository.AddressRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -8,21 +10,22 @@ import java.util.List;
 @Service
 public class AddressService {
     private AddressRepository addressRepository;
+    private AddressMapper addressMapper;
 
-    public AddressService(AddressRepository addressRepository) {
+    public AddressService(AddressRepository addressRepository, AddressMapper addressMapper) {
         this.addressRepository = addressRepository;
+        this.addressMapper = addressMapper;
     }
 
-    public List<Address> findAll() {
-        return addressRepository.findAll();
+    public List<AddressDto> findAll() {
+        return addressMapper.toDTOs(addressRepository.findAll());
     }
 
-    public Address findById(long id) {
-        return addressRepository.findById(id).orElse(null);
+    public AddressDto findById(long id) {
+        return addressMapper.toDto(addressRepository.findById(id).orElse(null));
     }
 
-    public Address save(Address address) {
-        address = addressRepository.save(address);
-        return address;
+    public AddressDto save(AddressEntity addressEntity) {
+        return addressMapper.toDto(addressRepository.save(addressEntity));
     }
 }

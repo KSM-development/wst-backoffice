@@ -1,6 +1,7 @@
 package com.ksm.wstbackoffice.controller;
 
-import com.ksm.wstbackoffice.entity.Address;
+import com.ksm.wstbackoffice.dto.AddressDto;
+import com.ksm.wstbackoffice.entity.AddressEntity;
 import com.ksm.wstbackoffice.service.AddressService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,19 +23,19 @@ public class AddressController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Address>> findAll() {
-        List<Address> addresses = addressService.findAll();
+    public ResponseEntity<List<AddressDto>> findAll() {
+        List<AddressDto> addresses = addressService.findAll();
         return ResponseEntity.status(HttpStatus.OK)
                 .body(addresses);
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Address> findById(@PathVariable long id) {
+    public ResponseEntity<AddressDto> findById(@PathVariable long id) {
         if (id < 1) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
 
-        Address address = addressService.findById(id);
+        AddressDto address = addressService.findById(id);
 
         if (address == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
@@ -45,8 +46,8 @@ public class AddressController {
     }
 
     @PostMapping
-    public ResponseEntity<Address> create(@RequestBody Address entityAddress) {
-        Address address = addressService.save(entityAddress);
+    public ResponseEntity<AddressDto> create(@RequestBody AddressEntity addressEntity) {
+        AddressDto address = addressService.save(addressEntity);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(address);
     }

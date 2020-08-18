@@ -1,6 +1,6 @@
 package com.ksm.wstbackoffice.controller;
 
-import com.ksm.wstbackoffice.entity.Country;
+import com.ksm.wstbackoffice.dto.CountryDto;
 import com.ksm.wstbackoffice.service.CountryService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,19 +23,19 @@ public class CountryController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Country>> findAll() {
-        List<Country> countries = countryService.findAll();
+    public ResponseEntity<List<CountryDto>> findAll() {
+        List<CountryDto> countries = countryService.findAll();
         return ResponseEntity.status(HttpStatus.OK)
                 .body(countries);
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Country> findById(@PathVariable String id) {
+    public ResponseEntity<CountryDto> findById(@PathVariable String id) {
         if (!Pattern.matches(ONLY_NUMBERS_LENGHT_3_REGEX, id)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
 
-        Country country = countryService.findById(id);
+        CountryDto country = countryService.findById(id);
 
         if (country == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
