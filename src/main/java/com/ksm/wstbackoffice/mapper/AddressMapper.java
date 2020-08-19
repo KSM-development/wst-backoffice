@@ -12,7 +12,7 @@ public interface AddressMapper {
     @Mapping(source = "country.ISO3166", target = "countryISO3166")
     AddressDto toDto(AddressEntity entity);
 
-    List<AddressDto> toDTOs(List<AddressEntity> entities);
+    List<AddressDto> toDtos(List<AddressEntity> entities);
 
     AddressEntity toEntity(AddressDto dto);
 }

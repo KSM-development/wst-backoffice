@@ -10,7 +10,7 @@ import java.util.List;
 public interface CountryMapper {
     CountryDto toDto(CountryEntity entity);
 
-    List<CountryDto> toDTOs(List<CountryEntity> entities);
+    List<CountryDto> toDtos(List<CountryEntity> entities);
 
     CountryEntity toEntity(CountryDto dto);
 }

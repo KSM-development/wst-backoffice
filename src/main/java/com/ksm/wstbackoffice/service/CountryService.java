@@ -17,7 +17,7 @@ public class CountryService {
     }
 
     public List<CountryDto> findAll() {
-        return countryMapper.toDTOs(countryRepository.findAll());
+        return countryMapper.toDtos(countryRepository.findAll());
     }
 
     public CountryDto findById(String id) {

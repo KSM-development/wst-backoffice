@@ -18,7 +18,7 @@ public class AddressService {
     }
 
     public List<AddressDto> findAll() {
-        return addressMapper.toDTOs(addressRepository.findAll());
+        return addressMapper.toDtos(addressRepository.findAll());
     }
 
     public AddressDto findById(long id) {
