@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.ResponseEntity;
 import java.util.List;
+import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping(value = "addresses")
 public class AddressController {
+    private static final String ONLY_NUMBERS_LENGHT_3_REGEX = "[0-9]{3}";
     private AddressService addressService;
 
     public AddressController(AddressService addressService) {
@@ -46,7 +48,15 @@ public class AddressController {
 
     @PostMapping
     public ResponseEntity<AddressDto> create(@RequestBody AddressDto addressDto) {
+        String countryISO3166 = addressDto.getCountryISO3166();
+        if (countryISO3166 == null || !Pattern.matches(ONLY_NUMBERS_LENGHT_3_REGEX, countryISO3166)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+
         AddressDto address = addressService.save(addressDto);
+        if (address == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(address);
     }
