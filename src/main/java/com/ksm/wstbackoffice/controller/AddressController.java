@@ -2,6 +2,7 @@ package com.ksm.wstbackoffice.controller;
 
 import com.ksm.wstbackoffice.dto.AddressDto;
 import com.ksm.wstbackoffice.service.AddressService;
+import com.ksm.wstbackoffice.validation.ValidationConstant;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,7 +17,6 @@ import java.util.regex.Pattern;
 @RestController
 @RequestMapping(value = "addresses")
 public class AddressController {
-    private static final String ONLY_NUMBERS_LENGHT_3_REGEX = "[0-9]{3}";
     private AddressService addressService;
 
     public AddressController(AddressService addressService) {
@@ -49,7 +49,7 @@ public class AddressController {
     @PostMapping
     public ResponseEntity<AddressDto> create(@RequestBody AddressDto addressDto) {
         String countryISO3166 = addressDto.getCountryISO3166();
-        if (countryISO3166 == null || !Pattern.matches(ONLY_NUMBERS_LENGHT_3_REGEX, countryISO3166)) {
+        if (countryISO3166 == null || !Pattern.matches(ValidationConstant.ONLY_NUMBERS_LENGHT_3_REGEX, countryISO3166)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
 
