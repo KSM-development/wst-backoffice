@@ -1,7 +1,8 @@
 package com.ksm.wstbackoffice.controller;
 
-import com.ksm.wstbackoffice.entity.Country;
+import com.ksm.wstbackoffice.dto.CountryDto;
 import com.ksm.wstbackoffice.service.CountryService;
+import com.ksm.wstbackoffice.validation.ValidationConstant;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +16,6 @@ import java.util.regex.Pattern;
 @RestController
 @RequestMapping(value = "countries")
 public class CountryController {
-    private static final String ONLY_NUMBERS_LENGHT_3_REGEX = "[0-9]{3}";
     private CountryService countryService;
 
     public CountryController(CountryService countryService) {
@@ -23,19 +23,19 @@ public class CountryController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Country>> findAll() {
-        List<Country> countries = countryService.findAll();
+    public ResponseEntity<List<CountryDto>> findAll() {
+        List<CountryDto> countries = countryService.findAll();
         return ResponseEntity.status(HttpStatus.OK)
                 .body(countries);
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Country> findById(@PathVariable String id) {
-        if (!Pattern.matches(ONLY_NUMBERS_LENGHT_3_REGEX, id)) {
+    public ResponseEntity<CountryDto> findById(@PathVariable String id) {
+        if (!Pattern.matches(ValidationConstant.ONLY_NUMBERS_LENGHT_3_REGEX, id)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
 
-        Country country = countryService.findById(id);
+        CountryDto country = countryService.findById(id);
 
         if (country == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);

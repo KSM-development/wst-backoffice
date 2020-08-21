@@ -53,11 +53,7 @@ public class AddressControllerIT extends BaseControllerIT {
     }
 
     @Test
-    public void createTest() {
-        Map<String, Object> country = new HashMap<>();
-        country.put("iso3166", "076");
-        country.put("name", "Brazil");
-
+    public void createWithoutCountryTest() {
         Map<String, Object> address = new HashMap<>();
         address.put("zipcode", "13010");
         address.put("region", "Brazil region");
@@ -67,7 +63,72 @@ public class AddressControllerIT extends BaseControllerIT {
         address.put("houseNumber", "8a");
         address.put("apartmentNumber", "89");
         address.put("description", "Brazil address description");
-        address.put("country", country);
+
+        given().
+            contentType(ContentType.JSON).
+            body(address).
+        when().
+            post("addresses").
+        then().
+            statusCode(400);
+    }
+
+    @Test
+    public void createWithIncorrectFormatCountryTest() {
+        Map<String, Object> address = new HashMap<>();
+        address.put("zipcode", "13010");
+        address.put("region", "Brazil region");
+        address.put("district", "Brazil district");
+        address.put("city", "Rio de Janeiro");
+        address.put("street", "Rio Carnival");
+        address.put("houseNumber", "8a");
+        address.put("apartmentNumber", "89");
+        address.put("description", "Brazil address description");
+        address.put("countryISO3166", "0767");
+
+        given().
+            contentType(ContentType.JSON).
+            body(address).
+        when().
+            post("addresses").
+        then().
+            statusCode(400);
+    }
+
+    @Test
+    public void createWithNotExistentCountryTest() {
+        Map<String, Object> address = new HashMap<>();
+        address.put("zipcode", "13010");
+        address.put("region", "Brazil region");
+        address.put("district", "Brazil district");
+        address.put("city", "Rio de Janeiro");
+        address.put("street", "Rio Carnival");
+        address.put("houseNumber", "8a");
+        address.put("apartmentNumber", "89");
+        address.put("description", "Brazil address description");
+        address.put("countryISO3166", "076");
+
+        given().
+            contentType(ContentType.JSON).
+            body(address).
+        when().
+            post("addresses").
+        then().
+            statusCode(400);
+    }
+
+    @Test
+    public void createTest() {
+        Map<String, Object> address = new HashMap<>();
+        address.put("zipcode", "13010");
+        address.put("region", "Brazil region");
+        address.put("district", "Brazil district");
+        address.put("city", "Rio de Janeiro");
+        address.put("street", "Rio Carnival");
+        address.put("houseNumber", "8a");
+        address.put("apartmentNumber", "89");
+        address.put("description", "Brazil address description");
+        address.put("countryISO3166", "036");
 
         given().
             contentType(ContentType.JSON).
@@ -79,7 +140,7 @@ public class AddressControllerIT extends BaseControllerIT {
             body("id", notNullValue()).
             body("region", equalTo("Brazil region")).
             body("district", equalTo("Brazil district")).
-            body("city", equalTo("Rio de Janeiro"));
-
+            body("city", equalTo("Rio de Janeiro")).
+            body("countryISO3166", equalTo("036"));
     }
 }

@@ -1,28 +1,42 @@
 package com.ksm.wstbackoffice.service;
 
-import com.ksm.wstbackoffice.entity.Address;
+import com.ksm.wstbackoffice.dto.AddressDto;
+import com.ksm.wstbackoffice.dto.CountryDto;
+import com.ksm.wstbackoffice.entity.AddressEntity;
+import com.ksm.wstbackoffice.mapper.AddressMapper;
 import com.ksm.wstbackoffice.repository.AddressRepository;
+
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
 public class AddressService {
     private AddressRepository addressRepository;
+    private AddressMapper addressMapper;
+    private CountryService countryService;
 
-    public AddressService(AddressRepository addressRepository) {
+    public AddressService(AddressRepository addressRepository,
+                          AddressMapper addressMapper,
+                          CountryService countryService) {
         this.addressRepository = addressRepository;
+        this.addressMapper = addressMapper;
+        this.countryService = countryService;
     }
 
-    public List<Address> findAll() {
-        return addressRepository.findAll();
+    public List<AddressDto> findAll() {
+        return addressMapper.toDtos(addressRepository.findAll());
     }
 
-    public Address findById(long id) {
-        return addressRepository.findById(id).orElse(null);
+    public AddressDto findById(long id) {
+        return addressMapper.toDto(addressRepository.findById(id).orElse(null));
     }
 
-    public Address save(Address address) {
-        address = addressRepository.save(address);
-        return address;
+    public AddressDto save(AddressDto addressDto) {
+        CountryDto country = countryService.findById(addressDto.getCountryISO3166());
+        if (country == null) {
+            return null;
+        }
+        AddressEntity addressEntity = addressMapper.toEntity(addressDto);
+        return addressMapper.toDto(addressRepository.save(addressEntity));
     }
 }
