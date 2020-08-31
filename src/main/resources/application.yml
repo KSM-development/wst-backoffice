@@ -2,7 +2,7 @@ server:
   port: 8081
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/db_wst
+    url: jdbc:postgresql://postgresqldb:5432/db_wst
     username: admin_wst
     password: wst!#4pas@*
   jpa:
