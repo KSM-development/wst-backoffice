@@ -24,30 +24,25 @@
 * Mapstruct
 * Lombok
 
-## Start application with docker
-* Dockerfile (this file gives the instructions how to build the docker image).
-* Documentation describes the commands you can use in a Dockerfile -> https://docs.docker.com/engine/reference/builder/
+## Start the application using docker
+* download the app
+$ git clone https://github.com/KSM-development/wst-backoffice.git
 
-* docker-compose.yml (this file we use for deploy containers combining all together )
-* Documentation describes the commands you can use in a docker-compose.yml -> https://docs.docker.com/compose/compose-file/
+* go to main app directory
+$ cd wst-backoffice
 
-## Commands need to do from root folder our application:
-* mvn clean install  	// remove old target folder with files then create new target folder launch IT and create .jar file
-* docker-compose up  	// download and create images, containers and run containers   
-* docker-compose down	// stopping, removing containers 
+* create a jar file
+$ mvn clean package
 
-## Also we can use:
-* docker images // show docker images
-* docker ps     // show runing docker containers
-* docker ps -a  // show docker containers
-* docker ps -aq // show containers id
-* docker container stop [container name1] [container name2] [...] // stop container
-* docker container start [container name1] [container name2] [...] // start container
-* docker container rm [container name1] [container name2] [...] // remove containers
-* docker container rm -f $(docker ps -aq) 		// remove all containers
-* docker rmi -f [container name1] [container name2] [...] // remove images
-* docker rmi -f $(docker images -a -q)  			// remove all images
-* docker exec [OPTIONS] CONTAINER COMMAND [ARG...] // run a command in a running container -> https://docs.docker.com/engine/reference/commandline/exec/
+* run the app in the docker
+$ docker-compose up
+
+* stop the app in the docker
+$ docker-compose down
+
+* test the app is up and running
+$ curl -X GET http://localhost:8081/addresses
+$ curl -X GET http://localhost:8081/countries
 
 ## Business requirements:
 * CRUD warehouse
