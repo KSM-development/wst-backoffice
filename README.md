@@ -25,6 +25,8 @@
 * Lombok
 
 ## Start the application using docker
+* To run the app you need to add .env file to the root of the project. Please ask administrator for the file.
+
 * download the app
 ```
 git clone https://github.com/KSM-development/wst-backoffice.git
