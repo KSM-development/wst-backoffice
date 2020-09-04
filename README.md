@@ -26,23 +26,33 @@
 
 ## Start the application using docker
 * download the app
-$ git clone https://github.com/KSM-development/wst-backoffice.git
-
+```
+git clone https://github.com/KSM-development/wst-backoffice.git
+```
 * go to main app directory
-$ cd wst-backoffice
+```
+cd wst-backoffice
+```
 
 * create a jar file
-$ mvn clean package
+```
+mvn clean package
+```
 
 * run the app in the docker
-$ docker-compose up
-
-* stop the app in the docker
-$ docker-compose down
+```
+docker-compose up
+```
 
 * test the app is up and running
-$ curl -X GET http://localhost:8081/addresses
-$ curl -X GET http://localhost:8081/countries
+```
+curl -X GET http://localhost:8081/countries
+```
+
+* stop the app in the docker
+```
+docker-compose down
+```
 
 ## Business requirements:
 * CRUD warehouse
