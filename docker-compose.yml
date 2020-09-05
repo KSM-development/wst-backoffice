@@ -1,0 +1,22 @@
+version: '2'
+services:
+  app:
+    container_name: wst-backoffice
+    image: wst-backoffice
+    build: ./
+    ports:
+    - "8081:8081"
+    depends_on:
+    - postgresqldb
+  postgresqldb:
+    image: postgres
+    volumes:
+    - postgres-data:/var/lib/postgresql/data
+    ports:
+    - "5432:5432"
+    environment:
+    - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    - POSTGRES_USER=${POSTGRES_USER}
+    - POSTGRES_DB=${POSTGRES_DB}
+volumes:
+  postgres-data:

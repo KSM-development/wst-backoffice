@@ -24,6 +24,38 @@
 * Mapstruct
 * Lombok
 
+## Start the application using docker
+* To run the app you need to add .env file to the root of the project. Please ask administrator for the file.
+
+* download the app
+```
+git clone https://github.com/KSM-development/wst-backoffice.git
+```
+* go to main app directory
+```
+cd wst-backoffice
+```
+
+* create a jar file
+```
+mvn clean package -Dmaven.test.skip=true
+```
+
+* run the app in the docker
+```
+docker-compose up
+```
+
+* test the app is up and running
+```
+curl -X GET http://localhost:8081/countries
+```
+
+* stop the app in the docker
+```
+docker-compose down
+```
+
 ## Business requirements:
 * CRUD warehouse
 * CRUD item
