@@ -38,7 +38,7 @@ cd wst-backoffice
 
 * create a jar file
 ```
-mvn clean package
+mvn clean package -Dmaven.test.skip=true
 ```
 
 * run the app in the docker
