@@ -24,6 +24,22 @@
 * Mapstruct
 * Lombok
 
+## Start the application local to use an in-memory H2 database
+* download the app
+```
+git clone https://github.com/KSM-development/wst-backoffice.git
+```
+* go to main app directory
+```
+cd wst-backoffice
+```
+
+* run the app
+```
+mvn spring-boot:run
+```
+* stop the app click CTRL+C
+
 ## Start the application using docker
 * To run the app you need to add .env file to the root of the project. Please ask administrator for the file.
 
