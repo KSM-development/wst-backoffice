@@ -1,7 +1,7 @@
 version: '2'
 services:
   app:
-    container_name: wst-backoffice
+    container_name: wst-backoffice-local
     build:
       context: .
       dockerfile: Dockerfile-local
