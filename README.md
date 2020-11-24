@@ -24,7 +24,7 @@
 * Mapstruct
 * Lombok
 
-## Start the application local to use an in-memory H2 database
+## Start the application locally to use an in-memory H2 database
 * download the app
 ```
 git clone https://github.com/KSM-development/wst-backoffice.git
@@ -40,7 +40,7 @@ mvn spring-boot:run
 ```
 * stop the app click CTRL+C
 
-## Start the application using docker
+## Start the application using docker locally
 * To run the app you need to add .env file to the root of the project. Please ask administrator for the file.
 
 * download the app
@@ -57,9 +57,9 @@ cd wst-backoffice
 mvn clean package -Dmaven.test.skip=true
 ```
 
-* run the app in the docker
+* run the app in the docker with the flag to remove container after termination
 ```
-docker-compose up
+docker-compose -f docker-compose-local.yml up && docker-compose rm -fsv
 ```
 
 * test the app is up and running
@@ -68,6 +68,10 @@ curl -X GET http://localhost:8081/countries
 ```
 
 * stop the app in the docker
+```
+ctrl+C
+```
+or
 ```
 docker-compose down
 ```
