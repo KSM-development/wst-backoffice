@@ -2,7 +2,6 @@ version: '2'
 services:
   app:
     container_name: wst-backoffice
-    image: wst-backoffice
     build: ./
     ports:
     - "8081:8081"
