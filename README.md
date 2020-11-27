@@ -34,15 +34,21 @@ git clone https://github.com/KSM-development/wst-backoffice.git
 cd wst-backoffice
 ```
 
+* create a jar file
+```
+mvn clean package -Dmaven.test.skip=true
+```
+
 * run the app
 ```
-mvn spring-boot:run
+mvn spring-boot:run -Dspring.profiles.active=local
 ```
+
+* check it works - in your browser http://localhost:8081/countries
+
 * stop the app click CTRL+C
 
-## Start the application using docker locally
-* To run the app you need to add .env file to the root of the project. Please ask administrator for the file.
-
+## Start the application using docker
 * download the app
 ```
 git clone https://github.com/KSM-development/wst-backoffice.git
@@ -59,21 +65,29 @@ mvn clean package -Dmaven.test.skip=true
 
 * run the app in the docker with the flag to remove container after termination
 ```
-docker-compose -f docker-compose-local.yml up && docker-compose rm -fsv
+docker-compose up --build -d
 ```
 
 * test the app is up and running
 ```
-curl -X GET http://localhost:8081/countries
+curl -X GET -i http://localhost:8081/countries
 ```
 
 * stop the app in the docker
 ```
-ctrl+C
-```
-or
-```
 docker-compose down
+```
+
+### Troubleshooting and Tips
+* #### Problems with volumes
+find the volume your application uses and remove it
+```
+docker volume ls // make sure wst_backoffice volume exists
+docker volume rm wst_backoffice // remove it. The db will be removed and recreated
+```
+if this does not work, remove all volumes :). All not external stopped containers data will be lost
+```
+docker volume prune
 ```
 
 ## Business requirements:

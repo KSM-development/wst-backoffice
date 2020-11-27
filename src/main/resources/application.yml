@@ -1,5 +1,9 @@
 server:
   port: 8081
 
+spring:
+  application:
+    name: @project.name@
 
-
+  profiles:
+    active: ${EXEC_ENVIRONMENT:dev}

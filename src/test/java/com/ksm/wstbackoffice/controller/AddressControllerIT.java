@@ -1,5 +1,6 @@
 package com.ksm.wstbackoffice.controller;
 
+import com.ksm.wstbackoffice.dto.AddressDto;
 import io.restassured.http.ContentType;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Test;
@@ -25,9 +26,9 @@ import static org.hamcrest.Matchers.notNullValue;
 public class AddressControllerIT extends BaseControllerIT {
     public static Stream<Arguments> findByIdTestArguments() {
         return Stream.of(
-                Arguments.of(1L, 200),
-                Arguments.of(-1L, 400),
-                Arguments.of(0L, 400),
+                Arguments.of(-1L, 200),
+                Arguments.of(-100L, 404),
+                Arguments.of(0L, 404),
                 Arguments.of(Long.MAX_VALUE, 404)
         );
     }
@@ -84,7 +85,7 @@ public class AddressControllerIT extends BaseControllerIT {
         address.put("houseNumber", "8a");
         address.put("apartmentNumber", "89");
         address.put("description", "Brazil address description");
-        address.put("countryISO3166", "0767");
+        address.put("countryAlpha3code", "BRA1");
 
         given().
             contentType(ContentType.JSON).
@@ -106,7 +107,7 @@ public class AddressControllerIT extends BaseControllerIT {
         address.put("houseNumber", "8a");
         address.put("apartmentNumber", "89");
         address.put("description", "Brazil address description");
-        address.put("countryISO3166", "076");
+        address.put("countryAlpha3code", "XXX");
 
         given().
             contentType(ContentType.JSON).
@@ -119,20 +120,21 @@ public class AddressControllerIT extends BaseControllerIT {
 
     @Test
     public void createTest() {
-        Map<String, Object> address = new HashMap<>();
-        address.put("zipcode", "13010");
-        address.put("region", "Brazil region");
-        address.put("district", "Brazil district");
-        address.put("city", "Rio de Janeiro");
-        address.put("street", "Rio Carnival");
-        address.put("houseNumber", "8a");
-        address.put("apartmentNumber", "89");
-        address.put("description", "Brazil address description");
-        address.put("countryISO3166", "036");
+        AddressDto addressDto = new AddressDto();
+        addressDto.setZipcode("13010");
+        addressDto.setRegion("Brazil region");
+        addressDto.setDistrict("Brazil district");
+        addressDto.setCity("Rio de Janeiro");
+        addressDto.setStreet("Rio Carnival");
+        addressDto.setHouseNumber("8a");
+        addressDto.setApartmentNumber("89");
+        addressDto.setDescription("Brazil address description");
+        addressDto.setCountryAlpha3code("AUS");
+
 
         given().
             contentType(ContentType.JSON).
-            body(address).
+            body(addressDto).
         when().
             post("addresses").
         then().
@@ -141,6 +143,6 @@ public class AddressControllerIT extends BaseControllerIT {
             body("region", equalTo("Brazil region")).
             body("district", equalTo("Brazil district")).
             body("city", equalTo("Rio de Janeiro")).
-            body("countryISO3166", equalTo("036"));
+            body("countryAlpha3code", equalTo("AUS"));
     }
 }

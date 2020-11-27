@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -16,10 +17,12 @@ import javax.persistence.Table;
 @Table(name = "address")
 public class AddressEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "address_sequence")
+    @SequenceGenerator(name = "address_sequence",
+        sequenceName = "address_sequence", allocationSize = 1)
     private long id;
     @ManyToOne(cascade=CascadeType.PERSIST)
-    @JoinColumn(name="country_iso3166")
+    @JoinColumn(name="country_alpha3code")
     private CountryEntity country;
     @Column(columnDefinition = "VARCHAR(15)")
     private String zipcode;

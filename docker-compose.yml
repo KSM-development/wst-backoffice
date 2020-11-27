@@ -8,14 +8,16 @@ services:
     depends_on:
     - postgresqldb
   postgresqldb:
+    container_name: wst_postgres
     image: postgres
     volumes:
-    - postgres-data:${POSTGRES_DATA}
+    - pg_volume:/var/lib/postgresql/data
     ports:
     - "5432:5432"
     environment:
-    - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-    - POSTGRES_USER=${POSTGRES_USER}
-    - POSTGRES_DB=${POSTGRES_DB}
+      POSTGRES_USER: admin_wst
+      POSTGRES_PASSWORD: wst!#4pas@*
+      POSTGRES_DB: db_wst
 volumes:
-  postgres-data:
+  pg_volume:
+    name: wst_backoffice

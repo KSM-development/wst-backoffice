@@ -12,7 +12,9 @@ import javax.persistence.Table;
 public class CountryEntity {
     @Id
     @Column(columnDefinition = "VARCHAR(3)")
-    private String ISO3166;
+    private String alpha3code;
+    @Column(columnDefinition = "VARCHAR(2)")
+    private String alpha2code;
     @Column(columnDefinition = "VARCHAR(255)")
     private String name;
 }

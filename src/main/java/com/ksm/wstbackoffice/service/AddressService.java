@@ -32,7 +32,7 @@ public class AddressService {
     }
 
     public AddressDto save(AddressDto addressDto) {
-        CountryDto country = countryService.findById(addressDto.getCountryISO3166());
+        CountryDto country = countryService.findById(addressDto.getCountryAlpha3code());
         if (country == null) {
             return null;
         }
