@@ -45,7 +45,7 @@ public class AddressController {
     @PostMapping
     public ResponseEntity<AddressDto> create(@RequestBody AddressDto addressDto) {
         String countryAlpha3code = addressDto.getCountryAlpha3code();
-        if (countryAlpha3code == null || !Pattern.matches(ValidationConstant.ONLY_NUMBERS_LENGTH_3_REGEX, countryAlpha3code)) {
+        if (countryAlpha3code == null || !Pattern.matches(ValidationConstant.ONLY_LETTERS_LENGTH_3_REGEX, countryAlpha3code)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
 

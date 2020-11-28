@@ -7,9 +7,12 @@ import com.ksm.wstbackoffice.mapper.AddressMapper;
 import com.ksm.wstbackoffice.repository.AddressRepository;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 @Service
+@Transactional
 public class AddressService {
     private AddressRepository addressRepository;
     private AddressMapper addressMapper;

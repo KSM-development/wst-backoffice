@@ -41,7 +41,7 @@ mvn clean package -Dmaven.test.skip=true
 
 * run the app
 ```
-mvn spring-boot:run -Dspring.profiles.active=local
+mvn spring-boot:run -Dspring-boot.run.arguments=--EXEC_ENVIRONMENT=local
 ```
 
 * check it works - in your browser http://localhost:8081/countries
