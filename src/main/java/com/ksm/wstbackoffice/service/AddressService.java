@@ -7,9 +7,12 @@ import com.ksm.wstbackoffice.mapper.AddressMapper;
 import com.ksm.wstbackoffice.repository.AddressRepository;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 @Service
+@Transactional
 public class AddressService {
     private AddressRepository addressRepository;
     private AddressMapper addressMapper;
@@ -32,7 +35,7 @@ public class AddressService {
     }
 
     public AddressDto save(AddressDto addressDto) {
-        CountryDto country = countryService.findById(addressDto.getCountryISO3166());
+        CountryDto country = countryService.findById(addressDto.getCountryAlpha3code());
         if (country == null) {
             return null;
         }

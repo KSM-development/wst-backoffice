@@ -31,7 +31,7 @@ public class CountryController {
 
     @GetMapping("{id}")
     public ResponseEntity<CountryDto> findById(@PathVariable String id) {
-        if (!Pattern.matches(ValidationConstant.ONLY_NUMBERS_LENGHT_3_REGEX, id)) {
+        if (!Pattern.matches(ValidationConstant.ONLY_LETTERS_LENGTH_3_REGEX, id)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
 

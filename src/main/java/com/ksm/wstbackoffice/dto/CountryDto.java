@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class CountryDto {
-    private String ISO3166;
+    private String alpha3code;
     private String name;
 }

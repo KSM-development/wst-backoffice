@@ -32,10 +32,6 @@ public class AddressController {
 
     @GetMapping("{id}")
     public ResponseEntity<AddressDto> findById(@PathVariable long id) {
-        if (id < 1) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
-
         AddressDto address = addressService.findById(id);
 
         if (address == null) {
@@ -48,8 +44,8 @@ public class AddressController {
 
     @PostMapping
     public ResponseEntity<AddressDto> create(@RequestBody AddressDto addressDto) {
-        String countryISO3166 = addressDto.getCountryISO3166();
-        if (countryISO3166 == null || !Pattern.matches(ValidationConstant.ONLY_NUMBERS_LENGHT_3_REGEX, countryISO3166)) {
+        String countryAlpha3code = addressDto.getCountryAlpha3code();
+        if (countryAlpha3code == null || !Pattern.matches(ValidationConstant.ONLY_LETTERS_LENGTH_3_REGEX, countryAlpha3code)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
 

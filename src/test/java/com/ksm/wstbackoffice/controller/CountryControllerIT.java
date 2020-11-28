@@ -21,28 +21,29 @@ import java.util.stream.Stream;
 public class CountryControllerIT extends BaseControllerIT {
     public static Stream<Arguments> findByIdTestArguments() {
         return Stream.of(
-                Arguments.of("060", 200),
-                Arguments.of("804", 200),
+                Arguments.of("AUS", 200),
+                Arguments.of("ASS", 200),
                 Arguments.of("6", 400),
                 Arguments.of("06", 400),
                 Arguments.of("0689", 400),
                 Arguments.of("06j", 400),
                 Arguments.of("doe", 400),
+                Arguments.of("067", 400),
                 Arguments.of(",", 400),
                 Arguments.of(" ", 400),
                 Arguments.of("''", 400),
                 Arguments.of("' '", 400),
-                Arguments.of("999", 404)
+                Arguments.of("XXX", 404)
         );
     }
 
     @ParameterizedTest
     @MethodSource("findByIdTestArguments")
-    public void findByIdTest(String iso3166, int expectedStatus) {
+    public void findByIdTest(String alpha3code, int expectedStatus) {
         given().
-            pathParam("iso3166", iso3166).
+            pathParam("alpha3code", alpha3code).
         when().
-            get("countries/{iso3166}", iso3166).
+            get("countries/{alpha3code}", alpha3code).
         then().
             statusCode(expectedStatus);
     }

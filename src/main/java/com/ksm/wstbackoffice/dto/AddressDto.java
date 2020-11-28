@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class AddressDto {
     private long id;
-    private String countryISO3166;
+    private String countryAlpha3code;
     private String zipcode;
     private String region;
     private String district;

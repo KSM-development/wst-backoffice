@@ -1,5 +1,5 @@
-INSERT INTO country (iso3166, name) VALUES ('036', 'Australia');
-INSERT INTO country (iso3166, name) VALUES ('040', 'Austria');
-INSERT INTO country (iso3166, name) VALUES ('031', 'Azerbaijan');
-INSERT INTO country (iso3166, name) VALUES ('060', 'Bermuda');
-INSERT INTO country (iso3166, name) VALUES ('804', 'Ukraine');
+INSERT INTO country (alpha3code, name) VALUES ('AUS', 'Australia');
+INSERT INTO country (alpha3code, name) VALUES ('ASS', 'Austria');
+INSERT INTO country (alpha3code, name) VALUES ('AZE', 'Azerbaijan');
+INSERT INTO country (alpha3code, name) VALUES ('BER', 'Bermuda');
+INSERT INTO country (alpha3code, name) VALUES ('UKR', 'Ukraine');
