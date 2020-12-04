@@ -1,0 +1,34 @@
+version: apps/v1
+kind: Deployment
+metadata:
+  name: wst-backoffice-deployment
+  labels:
+    app: wst-backoffice
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: wst-backoffice-pod
+      labels:
+        app: wst-backoffice
+    spec:
+      containers:
+        - name: wst-backoffice-container
+          image: wst-backoffice:0.0.1-SNAPSHOT
+          ports:
+            - containerPort: 8081
+---
+version: v1
+kind: Service
+metadata:
+  name: wst-backoffice-service
+  labels:
+    app: wst-backoffice
+spec:
+  selector:
+    app: wst-backoffice
+  type: NodePort
+  ports:
+    port: 8081
+    targetPort: 8081
+    nodePort: 30010
