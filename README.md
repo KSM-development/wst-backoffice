@@ -80,15 +80,21 @@ docker-compose down
 
 ### Troubleshooting and Tips
 * #### Problems with volumes
-find the volume your application uses and remove it
+Solution <br>
+- find the volume your application uses and remove it
 ```
 docker volume ls // make sure wst_backoffice volume exists
 docker volume rm wst_backoffice // remove it. The db will be removed and recreated
 ```
-if this does not work, remove all volumes :). All not external stopped containers data will be lost
+- if this does not work, remove all volumes :). All not external stopped containers data will be lost
 ```
 docker volume prune
 ```
+
+* #### Failed DB migration
+Solution
+- remove from the table flyway_schema_history the row(s) with the last migration(s) that failed <br>
+- rerun the app
 
 ## Business requirements:
 * CRUD warehouse
