@@ -19,12 +19,12 @@ import javax.persistence.Table;
 
 @Entity
 @Data
-@Table(name = "warehous")
+@Table(name = "warehouse")
 public class WarehouseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "warehous_sequence")
-    @SequenceGenerator(name = "warehous_sequence",
-            sequenceName = "warehous_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "warehouse_sequence")
+    @SequenceGenerator(name = "warehouse_sequence",
+            sequenceName = "warehouse_sequence", allocationSize = 1)
     private Long id;
     @Column(columnDefinition = "VARCHAR(255)")
     private String name;
