@@ -16,9 +16,9 @@ services:
     ports:
     - "5432:5432"
     environment:
-      POSTGRES_USER: admin_wst
-      POSTGRES_PASSWORD: wst!#4pas@*
-      POSTGRES_DB: db_wst
+      POSTGRES_USER: ${POSTGRES_USERNAME}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
 volumes:
   pg_volume:
     name: wst_backoffice

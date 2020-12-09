@@ -24,7 +24,7 @@
 * Mapstruct
 * Lombok
 
-## Start the application locally to use an in-memory H2 database
+## Start the application using an in-memory H2 database
 * download the app
 ```
 git clone https://github.com/KSM-development/wst-backoffice.git
@@ -41,7 +41,7 @@ mvn clean package -Dmaven.test.skip=true
 
 * run the app
 ```
-mvn spring-boot:run -Dspring-boot.run.arguments=--EXEC_ENVIRONMENT=local
+mvn spring-boot:run -Dspring-boot.run.arguments=--EXEC_ENVIRONMENT=h2
 ```
 
 * check it works - in your browser http://localhost:8081/countries
@@ -56,6 +56,30 @@ git clone https://github.com/KSM-development/wst-backoffice.git
 * go to main app directory
 ```
 cd wst-backoffice
+```
+
+* add .env file
+```
+vim .env
+```
+with the content
+```
+POSTGRES_URL=jdbc:postgresql://postgresqldb:5432/test_db_wst
+POSTGRES_USERNAME=test_username
+POSTGRES_PASSWORD=test_password
+```
+
+* add src/main/resources/application-credentials.yml file
+```
+vim src/main/resources/application-credentials.yml
+```
+with the content
+```
+db:
+  db_wst:
+    url: test_db_wst
+    username: test_username
+    password: test_password
 ```
 
 * create a jar file
@@ -80,21 +104,31 @@ docker-compose down
 
 ### Troubleshooting and Tips
 * #### Problems with volumes
-Solution <br>
-- find the volume your application uses and remove it
-```
-docker volume ls // make sure wst_backoffice volume exists
-docker volume rm wst_backoffice // remove it. The db will be removed and recreated
-```
-- if this does not work, remove all volumes :). All not external stopped containers data will be lost
-```
-docker volume prune
-```
+    - find the volume your application uses and remove it
+    ```
+    docker volume ls // make sure wst_backoffice volume exists
+    docker volume rm wst_backoffice // remove it. The db will be removed and recreated
+    ```
+    - if this does not work, remove all volumes :). All not external stopped containers data will be lost
+    ```
+    docker volume prune
+    ```
+
+* #### Cannot connect to the Postgres TODO OPINTA: remove
+    - add application-local.yml file to the resources. Ask your admin for the file. Properties should be defined inside
+        - db.db_wst.username
+        - db.db_wst.password
+    - if you run it in docker, also make sure you have .env file in the root of your project. Ask your admin for the file. System environment variables should be defined inside:
+        - POSTGRES_URL
+        - POSTGRES_USERNAME
+        - POSTGRES_PASSWORD
+    
+* #### Where to get .env and application-credentials.yml files
+    - ask your admin. The file is placed in the secured private wst-artifactory repo
 
 * #### Failed DB migration
-Solution
-- remove from the table flyway_schema_history the row(s) with the last migration(s) that failed <br>
-- rerun the app
+    - remove from the table flyway_schema_history the row(s) with the last migration(s) that failed <br>
+    - rerun the app
 
 ## Business requirements:
 * CRUD warehouse
