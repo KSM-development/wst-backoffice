@@ -77,7 +77,7 @@ with the content
 ```
 db:
   db_wst:
-    url: test_db_wst
+    url: jdbc:postgresql://postgresqldb:5432/test_db_wst
     username: test_username
     password: test_password
 ```
