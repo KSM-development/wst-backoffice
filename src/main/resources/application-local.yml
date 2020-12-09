@@ -1,8 +1,5 @@
-env:
+server:
   port: 8081
-  db:
-    db_wst:
-      url: jdbc:postgresql://postgresqldb:5432/db_wst
 
 spring:
   profiles:
@@ -15,3 +12,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
+db:
+  db_wst:
+    url: jdbc:postgresql://postgresqldb:5432/db_wst

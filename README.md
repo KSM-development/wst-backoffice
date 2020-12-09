@@ -53,7 +53,7 @@ mvn spring-boot:run -Dspring-boot.run.arguments=--EXEC_ENVIRONMENT=h2
 ```
 git clone https://github.com/KSM-development/wst-backoffice.git
 ```
-* go to main app directory
+* go to the main app directory
 ```
 cd wst-backoffice
 ```
@@ -64,7 +64,7 @@ vim .env
 ```
 with the content
 ```
-POSTGRES_URL=jdbc:postgresql://postgresqldb:5432/test_db_wst
+POSTGRES_DB=test_db_wst
 POSTGRES_USERNAME=test_username
 POSTGRES_PASSWORD=test_password
 ```
