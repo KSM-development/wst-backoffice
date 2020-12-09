@@ -113,15 +113,6 @@ docker-compose down
     ```
     docker volume prune
     ```
-
-* #### Cannot connect to the Postgres TODO OPINTA: remove
-    - add application-local.yml file to the resources. Ask your admin for the file. Properties should be defined inside
-        - db.db_wst.username
-        - db.db_wst.password
-    - if you run it in docker, also make sure you have .env file in the root of your project. Ask your admin for the file. System environment variables should be defined inside:
-        - POSTGRES_URL
-        - POSTGRES_USERNAME
-        - POSTGRES_PASSWORD
     
 * #### Where to get .env and application-credentials.yml files
     - ask your admin. The file is placed in the secured private wst-artifactory repo
