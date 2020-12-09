@@ -1,9 +1,9 @@
+server:
+  port: 8081
+
 spring:
-  datasource:
-      driver-class-name: org.h2.Driver
-      url: jdbc:h2:mem:db_wst;MODE=PostgreSQL
-      username: sa
-      password:
+  profiles:
+    active: credentials
   jpa:
     generate-ddl: false
     hibernate:
@@ -12,9 +12,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
-  h2:
-    console:
-      enabled: true
-      path: /h2
-      settings:
-        web-allow-others: true
+
+db:
+  db_wst:
+    url: jdbc:postgresql://postgresqldb:5432/db_wst

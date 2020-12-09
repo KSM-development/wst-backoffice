@@ -1,9 +1,12 @@
 server:
-  port: 8081
+  port: ${PORT:${server.port:8081}}
 
 spring:
   application:
     name: @project.name@
-
   profiles:
-    active: ${EXEC_ENVIRONMENT:dev}
+    active: ${EXEC_ENVIRONMENT:local,credentials}
+  datasource:
+    url: ${POSTGRES_URL:${db.db_wst.url}}
+    username: ${POSTGRES_USERNAME:${db.db_wst.username}}
+    password: ${POSTGRES_PASSWORD:${db.db_wst.password}}
