@@ -1,28 +1,64 @@
-# World shop trade(WST)
+# World shop trade (WST) back-office
+Used to manage reference information (addresses, shops, warehouses, item, clients, discounts etc)
 
-## Stack of technologies:
-* Java 8 (functional interface, lambda, stream api, new collection api, new concurrency api)
-* Git
-* Maven
-* Spring boot
-* Spring data jpa (hibernate)
-* Spring security
-* Spring redis
-* Spring kafka
-* Spring cloud config
-* Spring cloud openfeign
-* Spring cloud circuit breaker
-* Spring cloud gateway
-* Spring batch
-* Mysql
-* Docker
-* Microservice architecture
-* 3 tier architecture
-* REST best practices
-* Unit testing with JUnit and Mockito
-* Integration testing with Rest Assured
-* Mapstruct
-* Lombok
+## Stack of technologies plan:
+- [x] Java 8 (
+    - [ ] functional interface
+    - [x] lambda
+    - [x] stream api
+    - [ ] Optional
+    - [x] new collection api
+    - [ ] new concurrency api
+- [x] Git
+- [x] Maven
+- [x] Spring framework
+    - [x] Spring boot
+    - [x] Spring data jpa (hibernate)
+    - [ ] Spring batch
+    - [ ] Spring security
+    - [ ] Spring redis
+    - [ ] Spring kafka
+    - [ ] Spring cloud
+        - [ ] Spring cloud config
+        - [ ] Spring cloud netflix Eureka
+        - [ ] Spring cloud openfeign
+        - [ ] Spring cloud circuit breaker
+        - [ ] Spring cloud gateway
+- [x] PostgreSql
+- [ ] ElasticSearch
+- [ ] Redis
+- [x] Docker and docker-compose
+- [ ] Kubernetes
+- [ ] Jenkins
+- [ ] AWS or GCP
+- [x] Microservice architecture
+    - [x] 12 factor app
+        - [x] codebase
+        - [x] dependencies
+        - [ ] config
+        - [x] backing services
+        - [ ] build, release, run
+        - [x] stateless processes
+        - [x] port binding
+        - [x] concurrency
+        - [ ] disposability
+        - [ ] dev/prod parity
+        - [ ] logs
+        - [ ] admin Processes or operational Tasks
+    - [x] cloud native design patterns
+        - [ ] event-driven
+        - [ ] CQRS
+        - [ ] saga patterns
+        - [x] multiple service instances
+        - [ ] canary deployments
+        - [x] stateless services
+- [x] 3 tier architecture (DAO, Service, Controller layers)
+- [x] REST best practices (Richardson Maturity Model)
+- [x] Unit testing with JUnit and Mockito
+- [x] Integration testing with Rest Assured
+- [ ] Integration testing use of docker for backing services
+- [x] Mapstruct
+- [x] Lombok
 
 ## Start the application using an in-memory H2 database
 * download the app
@@ -46,7 +82,7 @@ mvn spring-boot:run -Dspring-boot.run.arguments=--EXEC_ENVIRONMENT=h2
 
 * check it works - in your browser http://localhost:8081/countries
 
-* stop the app click CTRL+C
+* stop the app by pressing CTRL+C
 
 ## Start the application using docker
 * download the app
@@ -122,8 +158,9 @@ docker-compose down
     - rerun the app
 
 ## Business requirements:
-* CRUD warehouse
-* CRUD item
+* Address management
+* Warehouse management
+* Item management
 * Client management
 * User management
 
