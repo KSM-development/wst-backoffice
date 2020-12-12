@@ -1,9 +1,4 @@
-server:
-  port: 8081
-
 spring:
-  profiles:
-    active: credentials
   jpa:
     generate-ddl: false
     hibernate:

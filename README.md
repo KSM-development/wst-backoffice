@@ -60,6 +60,16 @@ Used to manage reference information (addresses, shops, warehouses, item, client
 - [x] Mapstruct
 - [x] Lombok
 
+## Documentation. Swagger
+* swagger-ui
+```
+http://localhost:8081/api/swagger-ui/index.html
+```
+* swagger api-doc
+```
+http://localhost:8081/api/v3/api-docs
+```
+
 ## Start the application using an in-memory H2 database
 * download the app
 ```
@@ -80,7 +90,7 @@ mvn clean package -Dmaven.test.skip=true
 mvn spring-boot:run -Dspring-boot.run.arguments=--EXEC_ENVIRONMENT=h2
 ```
 
-* check it works - in your browser http://localhost:8081/countries
+* check it works - in your browser http://localhost:8081/api/countries
 
 * stop the app by pressing CTRL+C
 
@@ -130,7 +140,7 @@ docker-compose up --build -d
 
 * test the app is up and running
 ```
-curl -X GET -i http://localhost:8081/countries
+curl -X GET -i http://localhost:8081/api/countries
 ```
 
 * stop the app in the docker
