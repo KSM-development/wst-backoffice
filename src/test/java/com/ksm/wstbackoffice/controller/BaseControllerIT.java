@@ -15,5 +15,6 @@ public class BaseControllerIT {
     @BeforeEach
     void setUp() {
         RestAssured.port = port;
+        RestAssured.basePath = "api";
     }
 }
