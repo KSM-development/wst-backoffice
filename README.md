@@ -95,6 +95,9 @@ mvn spring-boot:run -Dspring-boot.run.arguments=--EXEC_ENVIRONMENT=h2
 * stop the app by pressing CTRL+C
 
 ## Start the application using docker
+* prerequisites
+    - docker (tested on 19.03.13)
+    - docker-compose (not lower than 1.27.4)
 * download the app
 ```
 git clone https://github.com/KSM-development/wst-backoffice.git
