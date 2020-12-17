@@ -1,8 +1,8 @@
-INSERT INTO country (alpha3code, name) VALUES ('AUS', 'Australia');
-INSERT INTO country (alpha3code, name) VALUES ('ASS', 'Austria');
-INSERT INTO country (alpha3code, name) VALUES ('AZE', 'Azerbaijan');
-INSERT INTO country (alpha3code, name) VALUES ('BER', 'Bermuda');
-INSERT INTO country (alpha3code, name) VALUES ('UKR', 'Ukraine');
+INSERT INTO country (alpha2code, alpha3Code, name) VALUES ('AU', 'AUS', 'Australia');
+INSERT INTO country (alpha2code, alpha3Code, name) VALUES ('AT', 'ASS', 'Austria');
+INSERT INTO country (alpha2code, alpha3Code, name) VALUES ('AZ', 'AZE', 'Azerbaijan');
+INSERT INTO country (alpha2code, alpha3Code, name) VALUES ('BM', 'BER', 'Bermuda');
+INSERT INTO country (alpha2code, alpha3Code, name) VALUES ('UA', 'UKR', 'Ukraine');
 
 INSERT INTO address (id, apartment_number, city, district, house_number, region, street, zipcode, description, country_alpha3code)
  VALUES (-1, '1', 'Kiev', 'Holosiiv district', '5a', 'Holosiiv region', 'Petra Stusa', '01032', 'description address 1', 'UKR');
@@ -23,5 +23,3 @@ INSERT INTO warehouse (id, name, warehouse_type, price_type, description, addres
  VALUES (-3, 'warehouse_3', 'RETAIL', 'RETAIL', 'description_3', '-4');
 INSERT INTO warehouse (id, name, warehouse_type, price_type, description, address_id)
  VALUES (-4, 'warehouse_4', 'WHOLESALE', 'WHOLESALE', 'description_4', '-3');
-INSERT INTO warehouse (id, name, warehouse_type, price_type, description, address_id)
- VALUES (-5, 'warehouse_5', 'RETAIL', 'RETAIL', 'description_5', '-3');
