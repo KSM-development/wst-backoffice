@@ -119,17 +119,17 @@ public class WarehouseControllerIT extends BaseControllerIT {
         warehouseEntity.setAddress(addressMapper.toEntity(addressDto));
 
         given().
-                contentType(ContentType.JSON).
-                body(warehouseMapper.toDto(warehouseEntity)).
-                pathParam("id", warehouse_id).
-            when().
-                put("warehouses/{id}").
-            then().
-                statusCode(200).
-                body("id", notNullValue()).
-                body("name", equalTo("warehouse_update_1")).
-                body("warehouseType", equalTo("WHOLESALE")).
-                body("priceType", equalTo("WHOLESALE")).
-                body("address.id", equalTo(address_id));
+            contentType(ContentType.JSON).
+            body(warehouseMapper.toDto(warehouseEntity)).
+            pathParam("id", warehouse_id).
+        when().
+            put("warehouses/{id}").
+        then().
+            statusCode(200).
+            body("id", notNullValue()).
+            body("name", equalTo("warehouse_update_1")).
+            body("warehouseType", equalTo("WHOLESALE")).
+            body("priceType", equalTo("WHOLESALE")).
+            body("address.id", equalTo(address_id));
     }
 }
