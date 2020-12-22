@@ -116,6 +116,7 @@ with the content
 POSTGRES_DB=test_db_wst
 POSTGRES_USERNAME=test_username
 POSTGRES_PASSWORD=test_password
+DOCKER_PG_VOLUME_NAME=test_db_wst_volume
 ```
 
 * add src/main/resources/application-credentials.yml file
