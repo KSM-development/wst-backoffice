@@ -14,6 +14,7 @@ import static org.springframework.web.context.WebApplicationContext.SCOPE_REQUES
 @Scope(value = SCOPE_REQUEST, proxyMode = ScopedProxyMode.TARGET_CLASS)
 @Getter
 @Setter
+// TODO OPINTA
 public class RequestScopedTest {
     private String lang;
 
