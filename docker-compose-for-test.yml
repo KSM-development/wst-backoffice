@@ -1,0 +1,26 @@
+version: '2'
+services:
+  app:
+    container_name: wst-backoffice-for-test
+    build:
+      context: .
+      dockerfile: Dockerfile-for-test
+    image: wst-backoffice-for-test:0.0.1-SNAPSHOT
+    ports:
+      - "8081:8081"
+    depends_on:
+      - postgresqldb
+  postgresqldb:
+    container_name: wst_postgres
+    image: postgres
+    volumes:
+      - pg_volume:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USERNAME}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+volumes:
+  pg_volume:
+    name: ${DOCKER_PG_VOLUME_NAME}
