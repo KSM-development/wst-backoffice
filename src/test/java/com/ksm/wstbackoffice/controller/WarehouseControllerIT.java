@@ -3,13 +3,11 @@ package com.ksm.wstbackoffice.controller;
 import com.ksm.wstbackoffice.dto.AddressDto;
 import com.ksm.wstbackoffice.dto.WarehouseDto;
 import com.ksm.wstbackoffice.entity.AddressEntity;
-import com.ksm.wstbackoffice.entity.WarehouseEntity;
 import com.ksm.wstbackoffice.enumeration.PriceType;
 import com.ksm.wstbackoffice.enumeration.WarehouseType;
 import com.ksm.wstbackoffice.mapper.AddressMapper;
-import com.ksm.wstbackoffice.mapper.WarehouseMapper;
 import com.ksm.wstbackoffice.service.AddressService;
-import com.ksm.wstbackoffice.service.WarehouseService;
+import com.ksm.wstbackoffice.service.IWarehouseService;
 import io.restassured.http.ContentType;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Test;
@@ -33,11 +31,9 @@ import static org.hamcrest.Matchers.notNullValue;
 })
 public class WarehouseControllerIT extends BaseControllerIT {
     @Autowired
-    private WarehouseService warehouseService;
+    private IWarehouseService warehouseService;
     @Autowired
     private AddressService addressService;
-    @Autowired
-    private WarehouseMapper warehouseMapper;
     @Autowired
     private AddressMapper addressMapper;
 
@@ -98,9 +94,9 @@ public class WarehouseControllerIT extends BaseControllerIT {
         then().
             statusCode(201).
             body("id", notNullValue()).
-            body("name", equalTo("warehause_5")).
-            body("warehouseType", equalTo("RETAIL")).
-            body("priceType", equalTo("RETAIL"));
+            body("name", equalTo(warehouseDto.getName())).
+            body("warehouseType", equalTo(warehouseDto.getWarehouseType().name())).
+            body("priceType", equalTo(warehouseDto.getPriceType().name()));
     }
 
     @Test
@@ -111,25 +107,24 @@ public class WarehouseControllerIT extends BaseControllerIT {
         AddressDto addressDto = addressService.findById(address_id);
 
         WarehouseDto warehouseDto = warehouseService.findById(warehouse_id);
-        WarehouseEntity warehouseEntity = warehouseMapper.toEntity(warehouseDto);
-        warehouseEntity.setName("warehouse_update_1");
-        warehouseEntity.setPriceType(PriceType.WHOLESALE);
-        warehouseEntity.setWarehouseType(WarehouseType.WHOLESALE);
-        warehouseEntity.setDescription("warehouse_update_description_1");
-        warehouseEntity.setAddress(addressMapper.toEntity(addressDto));
+        warehouseDto.setName("warehouse_update_1");
+        warehouseDto.setPriceType(PriceType.WHOLESALE);
+        warehouseDto.setWarehouseType(WarehouseType.WHOLESALE);
+        warehouseDto.setDescription("warehouse_update_description_1");
+        warehouseDto.setAddress(addressMapper.toEntity(addressDto));
 
         given().
             contentType(ContentType.JSON).
-            body(warehouseMapper.toDto(warehouseEntity)).
+            body(warehouseDto).
             pathParam("id", warehouse_id).
         when().
             put("warehouses/{id}").
         then().
             statusCode(200).
             body("id", notNullValue()).
-            body("name", equalTo("warehouse_update_1")).
-            body("warehouseType", equalTo("WHOLESALE")).
-            body("priceType", equalTo("WHOLESALE")).
+            body("name", equalTo(warehouseDto.getName())).
+            body("warehouseType", equalTo(warehouseDto.getWarehouseType().name())).
+            body("priceType", equalTo(warehouseDto.getPriceType().name())).
             body("address.id", equalTo(address_id));
     }
 }

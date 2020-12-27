@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class WarehouseService {
+public class WarehouseService implements IWarehouseService {
 
     private WarehouseMapper warehouseMapper;
     private WarehouseRepository warehouseRepository;
@@ -32,5 +32,13 @@ public class WarehouseService {
 
     public WarehouseDto findById(long id) {
         return warehouseMapper.toDto(warehouseRepository.findById(id).orElse(null));
+    }
+
+    public WarehouseDto update(WarehouseDto warehouseDto, long id) {
+        WarehouseDto existWarehouse = findById(id);
+        if (existWarehouse == null) {
+            return null;
+        }
+        return save(warehouseDto);
     }
 }

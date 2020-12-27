@@ -1,7 +1,7 @@
 package com.ksm.wstbackoffice.controller;
 
 import com.ksm.wstbackoffice.dto.WarehouseDto;
-import com.ksm.wstbackoffice.service.WarehouseService;
+import com.ksm.wstbackoffice.service.IWarehouseService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,9 +17,9 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "warehouses")
 public class WarehouseController {
-    private WarehouseService warehouseService;
+    private IWarehouseService warehouseService;
 
-    public WarehouseController(WarehouseService warehouseService) {
+    public WarehouseController(IWarehouseService warehouseService) {
         this.warehouseService = warehouseService;
     }
 
@@ -52,12 +52,7 @@ public class WarehouseController {
 
     @PutMapping("{id}")
     public ResponseEntity<?> update(@RequestBody WarehouseDto warehouseDto, @PathVariable long id) {
-        WarehouseDto existWarehouse = warehouseService.findById(id);
-        if (existWarehouse == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
-
-        WarehouseDto warehouse = warehouseService.save(warehouseDto);
+        WarehouseDto warehouse = warehouseService.update(warehouseDto, id);
         if (warehouse == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
