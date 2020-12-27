@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class WarehouseService implements IWarehouseService {
+public class WarehouseService {
 
     private WarehouseMapper warehouseMapper;
     private WarehouseRepository warehouseRepository;

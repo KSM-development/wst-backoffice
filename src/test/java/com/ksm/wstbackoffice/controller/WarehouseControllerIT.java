@@ -7,9 +7,8 @@ import com.ksm.wstbackoffice.enumeration.PriceType;
 import com.ksm.wstbackoffice.enumeration.WarehouseType;
 import com.ksm.wstbackoffice.mapper.AddressMapper;
 import com.ksm.wstbackoffice.service.AddressService;
-import com.ksm.wstbackoffice.service.IWarehouseService;
+import com.ksm.wstbackoffice.service.WarehouseService;
 import io.restassured.http.ContentType;
-import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -31,7 +30,7 @@ import static org.hamcrest.Matchers.notNullValue;
 })
 public class WarehouseControllerIT extends BaseControllerIT {
     @Autowired
-    private IWarehouseService warehouseService;
+    private WarehouseService warehouseService;
     @Autowired
     private AddressService addressService;
     @Autowired
@@ -64,7 +63,7 @@ public class WarehouseControllerIT extends BaseControllerIT {
             get("warehouses").
         then().
             statusCode(200).
-        body("size()", CoreMatchers.equalTo(4));
+        body("size()", equalTo(4));
     }
 
     @Test

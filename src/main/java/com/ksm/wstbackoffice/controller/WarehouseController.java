@@ -1,7 +1,7 @@
 package com.ksm.wstbackoffice.controller;
 
 import com.ksm.wstbackoffice.dto.WarehouseDto;
-import com.ksm.wstbackoffice.service.IWarehouseService;
+import com.ksm.wstbackoffice.service.WarehouseService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,9 +17,9 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "warehouses")
 public class WarehouseController {
-    private IWarehouseService warehouseService;
+    private WarehouseService warehouseService;
 
-    public WarehouseController(IWarehouseService warehouseService) {
+    public WarehouseController(WarehouseService warehouseService) {
         this.warehouseService = warehouseService;
     }
 
