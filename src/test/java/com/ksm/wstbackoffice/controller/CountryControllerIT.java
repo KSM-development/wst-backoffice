@@ -1,5 +1,6 @@
 package com.ksm.wstbackoffice.controller;
 
+import io.restassured.http.ContentType;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
@@ -12,6 +13,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Stream;
 
 @SqlGroup({
@@ -37,6 +40,19 @@ public class CountryControllerIT extends BaseControllerIT {
         );
     }
 
+    public static Stream<Arguments> findCountriesStartWithTestArguments() {
+        return Stream.of(
+                Arguments.of(Arrays.asList(), 400),
+                Arguments.of(Arrays.asList(""), 404),
+                Arguments.of(Arrays.asList(" "), 404),
+                Arguments.of(Arrays.asList("a"), 200),
+                Arguments.of(Arrays.asList("a "), 200),
+                Arguments.of(Arrays.asList("a","a"), 200),
+                Arguments.of(Arrays.asList("a", "ua", "b"), 200),
+                Arguments.of(Arrays.asList("a","au"), 200)
+        );
+    }
+
     @ParameterizedTest
     @MethodSource("findByIdTestArguments")
     public void findByIdTest(String alpha3code, int expectedStatus) {
@@ -55,5 +71,17 @@ public class CountryControllerIT extends BaseControllerIT {
         then().
             statusCode(200).
             body("size()", equalTo(5));
+    }
+
+    @ParameterizedTest
+    @MethodSource("findCountriesStartWithTestArguments")
+    public void findCountriesStartWith(List<String> stringsToStartWith, int expectedStatus) {
+        given().
+            contentType(ContentType.JSON).
+            body(stringsToStartWith).
+        when().
+            post("countries/start-with").
+        then().
+            statusCode(expectedStatus);
     }
 }
