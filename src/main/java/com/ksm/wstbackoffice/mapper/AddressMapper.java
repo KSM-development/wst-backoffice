@@ -19,6 +19,6 @@ public abstract class AddressMapper {
 
     public abstract List<AddressDto> toDtos(List<AddressEntity> entities);
 
-    @Mapping(target="country", expression="java(countryRepository.getOne(dto.getCountryAlpha3code()))")
+    @Mapping(target="country", expression="java(countryRepository.findById(dto.getCountryAlpha3code()).orElse(null))")
     public abstract AddressEntity toEntity(AddressDto dto);
 }
