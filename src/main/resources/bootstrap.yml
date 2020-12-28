@@ -3,5 +3,5 @@ spring:
     name: wst-backoffice
   cloud:
     config:
-      uri: http://localhost:8100
+      uri: http://localhost:8101
       fail-fast: false
