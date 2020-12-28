@@ -8,7 +8,7 @@ import static java.lang.String.format;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
-class Task1CounterServiceConcurrentAccessTest {
+public class Task01_CounterService_ConcurrentAccessTest {
 
     @Test
     public void testCounter() throws InterruptedException {
