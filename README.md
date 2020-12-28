@@ -163,7 +163,8 @@ git clone https://github.com/KSM-development/wst-backoffice.git
     * Project Structure: check java 11 is selected
     * Settings: Lombok plugin should be installed; enable annotation processing;
 
-* add application-credentials.yml. Ask your admin for the file. It is in the artifactory repo
+* add application-credentials.yml. Ask your admin for the file. It is in the artifactory repo <br>
+It should use the same DB, username and password specified in the `./build-helper/docker-compose-postgres.yml`
 
 * clean package the app
 
