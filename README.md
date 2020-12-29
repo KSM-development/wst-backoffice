@@ -18,8 +18,8 @@ Used to manage reference information (addresses, shops, warehouses, item, client
     - [ ] Spring security
     - [ ] Spring redis
     - [ ] Spring kafka
-    - [ ] Spring cloud
-        - [ ] Spring cloud config
+    - [x] Spring cloud
+        - [x] Spring cloud config
         - [ ] Spring cloud netflix Eureka
         - [ ] Spring cloud openfeign
         - [ ] Spring cloud circuit breaker
@@ -35,7 +35,7 @@ Used to manage reference information (addresses, shops, warehouses, item, client
     - [x] 12 factor app
         - [x] codebase
         - [x] dependencies
-        - [ ] config
+        - [x] config
         - [x] backing services
         - [ ] build, release, run
         - [x] stateless processes
@@ -70,34 +70,11 @@ http://localhost:8081/api/swagger-ui/index.html
 http://localhost:8081/api/v3/api-docs
 ```
 
-## Start the application using an in-memory H2 database
-* download the app
-```
-git clone https://github.com/KSM-development/wst-backoffice.git
-```
-* go to main app directory
-```
-cd wst-backoffice
-```
-
-* create a jar file
-```
-mvn clean package -Dmaven.test.skip=true
-```
-
-* run the app
-```
-mvn spring-boot:run -Dspring-boot.run.arguments=--EXEC_ENVIRONMENT=h2
-```
-
-* check it works - in your browser http://localhost:8081/api/countries
-
-* stop the app by pressing CTRL+C
-
 ## Start the application using docker
 * prerequisites
     - docker (tested on 19.03.13)
     - docker-compose (not lower than 1.27.4)
+    - java 11
 * download the app
 ```
 git clone https://github.com/KSM-development/wst-backoffice.git
@@ -127,7 +104,6 @@ with the content
 ```
 db:
   db_wst:
-    url: jdbc:postgresql://postgresqldb:5432/test_db_wst
     username: test_username
     password: test_password
 ```
@@ -139,7 +115,7 @@ mvn clean package -Dmaven.test.skip=true
 
 * run the app in the docker with the flag to remove container after termination
 ```
-docker-compose up --build -d
+docker-compose -f docker-compose-for-test.yml up --build -d
 ```
 
 * test the app is up and running
@@ -149,8 +125,69 @@ curl -X GET -i http://localhost:8081/api/countries
 
 * stop the app in the docker
 ```
-docker-compose down
+docker-compose -f docker-compose-for-test.yml down
 ```
+
+## Start the application using an in-memory H2 database
+* download the app
+```
+git clone https://github.com/KSM-development/wst-backoffice.git
+```
+* go to main app directory
+```
+cd wst-backoffice
+```
+
+* create a jar file
+```
+mvn clean package -Dmaven.test.skip=true
+```
+
+* run the app
+```
+java -jar ./target/*.jar --spring.profiles.active=h2 --spring.cloud.config.enabled=false
+```
+
+* check it works - in your browser http://localhost:8081/api/countries
+
+* stop the app by pressing CTRL+C
+
+## Run the application locally from the Intellij Idea
+* download the app
+```
+git clone https://github.com/KSM-development/wst-backoffice.git
+```
+* import the app to the Intellij
+
+* check Intellij settings
+    * Project Structure: check java 11 is selected
+    * Settings: Lombok plugin should be installed; enable annotation processing;
+
+* add application-credentials.yml. Ask your admin for the file. It is in the artifactory repo <br>
+It should use the same DB, username and password specified in the `./build-helper/docker-compose-postgres.yml`
+
+* clean package the app
+
+* run the postgres in the docker. From the project root run the command
+```
+docker-compose -f ./build-helper/docker-compose-postgres.yml up -d
+```
+
+* run wst-config-server
+
+* configure the run/debug configuration with the VM options `-Dspring.profiles.active=local,credentials`
+
+* run the app
+
+* check it works - in your browser http://localhost:8081/api/countries
+
+* shutdown
+    * stop the app by pressing CTRL+C
+    * stop wst-config-server
+    * stop postgres in docker
+    ```
+    docker-compose -f ./build-helper/docker-compose-postgres.yml down
+    ```
 
 ### Troubleshooting and Tips
 * #### Problems with volumes
@@ -165,7 +202,7 @@ docker-compose down
     ```
     
 * #### Where to get .env and application-credentials.yml files
-    - ask your admin. The file is placed in the secured private wst-artifactory repo
+    - ask your admin. The file placed in the secured private wst-artifactory repo
 
 * #### Failed DB migration
     - remove from the table flyway_schema_history the row(s) with the last migration(s) that failed <br>
@@ -174,9 +211,9 @@ docker-compose down
 ## Business requirements:
 * Address management
 * Warehouse management
-* Item management
-* Client management
-* User management
+* Goods management
+* Supplier management
+* Customer management
 
 ## Developers
 * Sergiy Krokhmalniy [github](https://github.com/SerjiKSM)

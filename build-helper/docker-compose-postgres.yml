@@ -1,0 +1,17 @@
+# run it: docker-compose -f docker-compose-postgres.yml up -d
+version: '2'
+services:
+  postgresqldb:
+    container_name: wst_postgres
+    image: postgres
+    volumes:
+      - pg_volume:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: test_username
+      POSTGRES_PASSWORD: test_password
+      POSTGRES_DB: db_wst
+volumes:
+  pg_volume:
+    name: db_wst_volume
