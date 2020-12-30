@@ -43,8 +43,8 @@ public class CountryControllerIT extends BaseControllerIT {
     public static Stream<Arguments> findCountriesStartWithTestArguments() {
         return Stream.of(
                 Arguments.of(Arrays.asList(), 400),
-                Arguments.of(Arrays.asList(""), 404),
-                Arguments.of(Arrays.asList(" "), 404),
+                Arguments.of(Arrays.asList(""), 200),
+                Arguments.of(Arrays.asList(" "), 200),
                 Arguments.of(Arrays.asList("a"), 200),
                 Arguments.of(Arrays.asList("a "), 200),
                 Arguments.of(Arrays.asList("a","a"), 200),

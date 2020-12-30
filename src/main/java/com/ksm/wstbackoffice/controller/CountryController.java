@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -48,12 +49,12 @@ public class CountryController {
     }
 
     @PostMapping("/start-with")
-    public ResponseEntity<Map<String, List<String>>> findCountriesStartWith(@RequestBody List<String> stringsToStartWith) {
+    public ResponseEntity<Map<String, HashMap<String, ?>>> findCountriesStartWith(@RequestBody List<String> stringsToStartWith) {
         if (stringsToStartWith.isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
 
-        Map<String, List<String>> filteredCountries = countryService.startWith(stringsToStartWith);
+        Map<String, HashMap<String, ?>> filteredCountries = countryService.startWith(stringsToStartWith);
 
         if (filteredCountries.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);

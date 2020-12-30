@@ -27,8 +27,10 @@ public class CountryService {
         return countryMapper.toDto(countryRepository.findById(id).orElse(null));
     }
 
-    public Map<String, List<String>> startWith(List<String> stringsToStartWith) {
-        Map<String, List<String>> stringListMap = new HashMap<String, List<String>>();
+    public Map<String, HashMap<String, ?>> startWith(List<String> stringsToStartWith) {
+        Map<String, HashMap<String, ?>> countriesByNameStartingWith = new HashMap<String, HashMap<String, ?>>();
+        HashMap<String, List<String>> detailsCountriesByNameStartingWith = new HashMap<String, List<String>>();
+        HashMap<String, Long> totalCountriesByNameStartingWith = new HashMap<String, Long>();
 
         List<CountryDto> countryDtoList = findAll();
 
@@ -38,9 +40,14 @@ public class CountryService {
                             .filter(f -> f.getName().toLowerCase().startsWith(e.trim()))
                             .map(CountryDto::getName)
                             .collect(Collectors.toList());
-                    stringListMap.put(e, listFilteredCountries);
+
+                    totalCountriesByNameStartingWith.put(e, listFilteredCountries.stream().count());
+                    detailsCountriesByNameStartingWith.put(e, listFilteredCountries);
                 });
 
-        return stringListMap;
+        countriesByNameStartingWith.put("total",  totalCountriesByNameStartingWith);
+        countriesByNameStartingWith.put("details", detailsCountriesByNameStartingWith);
+
+        return countriesByNameStartingWith;
     }
 }
