@@ -1,0 +1,6 @@
+FROM adoptopenjdk/openjdk11:latest
+ARG JAR_FILE=/target/wst-backoffice-0.0.1-SNAPSHOT.jar
+ADD ${JAR_FILE} wst-backoffice.jar
+ENV SPRING_PROFILES_ACTIVE docker,credentials
+ENV SPRING_CLOUD_CONFIG_ENABLED=false
+ENTRYPOINT ["java","-jar","wst-backoffice.jar"]

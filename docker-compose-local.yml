@@ -1,9 +1,0 @@
-version: '2'
-services:
-  app:
-    container_name: wst-backoffice-local
-    build:
-      context: .
-      dockerfile: Dockerfile-local
-    ports:
-    - "8081:8081"
