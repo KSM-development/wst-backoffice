@@ -4,10 +4,14 @@ import com.ksm.wstbackoffice.dto.CountryDto;
 import com.ksm.wstbackoffice.mapper.CountryMapper;
 import com.ksm.wstbackoffice.repository.CountryRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Set;
 
 @Service
 public class CountryService {
@@ -27,25 +31,32 @@ public class CountryService {
         return countryMapper.toDto(countryRepository.findById(id).orElse(null));
     }
 
-    public Map<String, HashMap<String, ?>> startWith(List<String> stringsToStartWith) {
-        Map<String, HashMap<String, ?>> countriesByNameStartingWith = new HashMap<String, HashMap<String, ?>>();
-        HashMap<String, List<String>> detailsCountriesByNameStartingWith = new HashMap<String, List<String>>();
-        HashMap<String, Long> totalCountriesByNameStartingWith = new HashMap<String, Long>();
+    public Map<String, Map<String, ?>> startWith(Collection<String> nameStartsWithFilters) {
+        Map<String, Map<String, ?>> countriesByNameStartingWith = new HashMap<String, Map<String, ?>>();
+        Map<String, Collection<String>> detailsCountriesByNameStartingWith = new HashMap<String, Collection<String>>();
+        Map<String, Long> totalCountriesByNameStartingWith = new HashMap<String, Long>();
 
         List<CountryDto> countryDtoList = findAll();
 
-        stringsToStartWith.stream().filter(p -> p.trim().length() > 0)
-                .forEach(e -> {
-                    List<String> listFilteredCountries = countryDtoList.stream()
-                            .filter(f -> f.getName().toLowerCase().startsWith(e.trim()))
-                            .map(CountryDto::getName)
-                            .collect(Collectors.toList());
-
-                    totalCountriesByNameStartingWith.put(e, listFilteredCountries.stream().count());
-                    detailsCountriesByNameStartingWith.put(e, listFilteredCountries);
+        nameStartsWithFilters.stream()
+                .filter(p -> p.trim().length() > 0)
+                .forEach(p -> {
+                    Set<String> filteredCountries = new HashSet();
+                    countryDtoList.forEach(f -> {
+                        if (f.getName().toLowerCase().startsWith(p.toLowerCase().trim())) {
+                            String name = f.getName();
+                            filteredCountries.add(name);
+                        } else if (f.getName().toLowerCase().split(" ").length > 1) {
+                            Arrays.stream(f.getName().split(" "))
+                                    .filter(e -> e.toLowerCase().startsWith(p.toLowerCase().trim()))
+                                    .map(e -> f.getName()).forEach(filteredCountries::add);
+                        }
+                    });
+                    totalCountriesByNameStartingWith.put(p, filteredCountries.stream().count());
+                    detailsCountriesByNameStartingWith.put(p, filteredCountries);
                 });
 
-        countriesByNameStartingWith.put("total",  totalCountriesByNameStartingWith);
+        countriesByNameStartingWith.put("total", totalCountriesByNameStartingWith);
         countriesByNameStartingWith.put("details", detailsCountriesByNameStartingWith);
 
         return countriesByNameStartingWith;

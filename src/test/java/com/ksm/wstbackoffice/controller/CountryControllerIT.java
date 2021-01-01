@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.hasItems;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -70,18 +71,52 @@ public class CountryControllerIT extends BaseControllerIT {
             get("countries").
         then().
             statusCode(200).
-            body("size()", equalTo(5));
+            body("size()", equalTo(21));
     }
 
     @ParameterizedTest
     @MethodSource("findCountriesStartWithTestArguments")
-    public void findCountriesStartWith(List<String> stringsToStartWith, int expectedStatus) {
+    public void findCountriesStartWithTest(List<String> nameStartsWithFilters, int expectedStatus) {
         given().
             contentType(ContentType.JSON).
-            body(stringsToStartWith).
+            body(nameStartsWithFilters).
         when().
-            post("countries/start-with").
+            post("countries/filter-name").
         then().
             statusCode(expectedStatus);
+    }
+
+    @Test
+    public void findCountriesStartWithTest() {
+        List<String> nameStartsWithFilters = Arrays.asList("sa");
+
+        given().
+            contentType(ContentType.JSON).
+            body(nameStartsWithFilters).
+        when().
+            post("countries/filter-name").
+        then().
+            statusCode(200)
+            .body("details.sa", hasItems("Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines"))
+            .body("details.sa.size", equalTo(8));
+    }
+
+    @Test
+    public void findCountriesStartWithAndContainMoreThanOneWordTest() {
+        List<String> nameStartsWithFilters = Arrays.asList("kor", "amer", "co");
+
+        given().
+            contentType(ContentType.JSON).
+            body(nameStartsWithFilters).
+        when().
+            post("countries/filter-name").
+        then().
+            statusCode(200)
+            .body("details.kor", hasItems("North Korea"))
+            .body("details.kor.size", equalTo(1))
+            .body("details.amer", hasItems("United States of America"))
+            .body("details.amer.size", equalTo(1))
+            .body("details.co", hasItems("Democratic Republic of the Congo"))
+            .body("details.co.size", equalTo(1));
     }
 }
