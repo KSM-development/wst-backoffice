@@ -37,10 +37,6 @@ public class CountryController {
 
         CountryDto country = countryService.findById(id);
 
-        if (country == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
-
         return ResponseEntity.status(HttpStatus.OK)
                 .body(country);
     }

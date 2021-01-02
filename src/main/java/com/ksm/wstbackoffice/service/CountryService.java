@@ -1,6 +1,7 @@
 package com.ksm.wstbackoffice.service;
 
 import com.ksm.wstbackoffice.dto.CountryDto;
+import com.ksm.wstbackoffice.exception.ResourceNotFoundException;
 import com.ksm.wstbackoffice.mapper.CountryMapper;
 import com.ksm.wstbackoffice.repository.CountryRepository;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,7 @@ public class CountryService {
     }
 
     public CountryDto findById(String id) {
-        return countryMapper.toDto(countryRepository.findById(id).orElse(null));
+        return countryMapper.toDto(countryRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Not found country with id = " + id)));
     }
 }
