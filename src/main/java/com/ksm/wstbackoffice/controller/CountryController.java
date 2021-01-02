@@ -7,13 +7,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -50,17 +48,13 @@ public class CountryController {
                 .body(country);
     }
 
-    @PostMapping("/filter-name")
-    public ResponseEntity<Map<String, Map<String, ?>>> findCountriesStartWith(@RequestBody Collection<String> nameStartsWithFilters) {
+    @GetMapping("/filter-name")
+    public ResponseEntity<Map<String, Map<String, ?>>> findAllBy(@RequestBody Collection<String> nameStartsWithFilters) {
         if (nameStartsWithFilters.isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
 
-        Map<String, Map<String, ?>> filteredCountries = countryService.startWith(nameStartsWithFilters);
-
-        if (filteredCountries.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.OK).body(new HashMap<String, Map<String, ?>>());
-        }
+        Map<String, Map<String, ?>> filteredCountries = countryService.findAllBy(nameStartsWithFilters);
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(filteredCountries);

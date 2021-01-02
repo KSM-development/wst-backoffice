@@ -41,7 +41,7 @@ public class CountryControllerIT extends BaseControllerIT {
         );
     }
 
-    public static Stream<Arguments> findCountriesStartWithTestArguments() {
+    public static Stream<Arguments> findAllByTestArguments() {
         return Stream.of(
                 Arguments.of(Arrays.asList(), 400),
                 Arguments.of(Arrays.asList(""), 200),
@@ -51,6 +51,15 @@ public class CountryControllerIT extends BaseControllerIT {
                 Arguments.of(Arrays.asList("a","a"), 200),
                 Arguments.of(Arrays.asList("a", "ua", "b"), 200),
                 Arguments.of(Arrays.asList("a","au"), 200)
+        );
+    }
+
+    public static Stream<Arguments> findAllByFilterNameTestArguments() {
+        return Stream.of(
+                Arguments.of(Arrays.asList("sa"),
+                        Arrays.asList("Saudi Arabia", "South Georgia and the South Sandwich Islands",
+                                "Saint Lucia", "Saint Vincent and the Grenadines", "Sao Tome and Principe",
+                                "San Marino", "Saint Kitts and Nevis", "Samoa"))
         );
     }
 
@@ -75,41 +84,40 @@ public class CountryControllerIT extends BaseControllerIT {
     }
 
     @ParameterizedTest
-    @MethodSource("findCountriesStartWithTestArguments")
-    public void findCountriesStartWithTest(List<String> nameStartsWithFilters, int expectedStatus) {
+    @MethodSource("findAllByTestArguments")
+    public void findAllByTest(List<String> nameStartsWithFilters, int expectedStatus) {
         given().
             contentType(ContentType.JSON).
             body(nameStartsWithFilters).
         when().
-            post("countries/filter-name").
+            get("countries/filter-name").
         then().
             statusCode(expectedStatus);
     }
 
-    @Test
-    public void findCountriesStartWithTest() {
-        List<String> nameStartsWithFilters = Arrays.asList("sa");
-
+    @ParameterizedTest
+    @MethodSource("findAllByFilterNameTestArguments")
+    public void findAllByTest(List<String> nameStartsWithFilters, List<String> expected) {
         given().
             contentType(ContentType.JSON).
             body(nameStartsWithFilters).
         when().
-            post("countries/filter-name").
+            get("countries/filter-name").
         then().
             statusCode(200)
-            .body("details.sa", hasItems("Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines"))
+            .body("details.sa", hasItems(expected.toArray()))
             .body("details.sa.size", equalTo(8));
     }
 
     @Test
-    public void findCountriesStartWithAndContainMoreThanOneWordTest() {
+    public void findAllByContainMoreThanOneWordTest() {
         List<String> nameStartsWithFilters = Arrays.asList("kor", "amer", "co");
 
         given().
             contentType(ContentType.JSON).
             body(nameStartsWithFilters).
         when().
-            post("countries/filter-name").
+            get("countries/filter-name").
         then().
             statusCode(200)
             .body("details.kor", hasItems("North Korea"))
