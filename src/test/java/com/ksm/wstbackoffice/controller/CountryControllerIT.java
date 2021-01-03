@@ -1,6 +1,5 @@
 package com.ksm.wstbackoffice.controller;
 
-import io.restassured.http.ContentType;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
@@ -44,22 +43,18 @@ public class CountryControllerIT extends BaseControllerIT {
     public static Stream<Arguments> findAllByTestArguments() {
         return Stream.of(
                 Arguments.of(Arrays.asList(), 400),
-                Arguments.of(Arrays.asList(""), 200),
-                Arguments.of(Arrays.asList(" "), 200),
-                Arguments.of(Arrays.asList("a"), 200),
-                Arguments.of(Arrays.asList("a "), 200),
-                Arguments.of(Arrays.asList("a","a"), 200),
-                Arguments.of(Arrays.asList("a", "ua", "b"), 200),
-                Arguments.of(Arrays.asList("a","au"), 200)
+                Arguments.of(Arrays.asList(""), 400),
+                Arguments.of(Arrays.asList("a", "ua", "b"), 200)
         );
     }
 
     public static Stream<Arguments> findAllByFilterNameTestArguments() {
         return Stream.of(
-                Arguments.of(Arrays.asList("sa"),
-                        Arrays.asList("Saudi Arabia", "South Georgia and the South Sandwich Islands",
-                                "Saint Lucia", "Saint Vincent and the Grenadines", "Sao Tome and Principe",
-                                "San Marino", "Saint Kitts and Nevis", "Samoa"))
+                Arguments.of("amer", Arrays.asList("United States of America"), 200),
+                Arguments.of("kor", Arrays.asList("North Korea"), 200),
+                Arguments.of("sa", Arrays.asList("Saint Kitts and Nevis", "Saint Lucia",
+                        "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe",
+                        "Saudi Arabia", "South Georgia and the South Sandwich Islands"), 200)
         );
     }
 
@@ -87,8 +82,7 @@ public class CountryControllerIT extends BaseControllerIT {
     @MethodSource("findAllByTestArguments")
     public void findAllByTest(List<String> nameStartsWithFilters, int expectedStatus) {
         given().
-            contentType(ContentType.JSON).
-            body(nameStartsWithFilters).
+            queryParam("nameStartsWithFilters", nameStartsWithFilters).
         when().
             get("countries/filter-name").
         then().
@@ -97,34 +91,15 @@ public class CountryControllerIT extends BaseControllerIT {
 
     @ParameterizedTest
     @MethodSource("findAllByFilterNameTestArguments")
-    public void findAllByTest(List<String> nameStartsWithFilters, List<String> expected) {
+    public void findAllByTest(String nameStartsWithFilters, List<String> expectedData, int expectedStatus) {
         given().
-            contentType(ContentType.JSON).
-            body(nameStartsWithFilters).
+            queryParam("nameStartsWithFilters", nameStartsWithFilters).
         when().
             get("countries/filter-name").
         then().
-            statusCode(200)
-            .body("details.sa", hasItems(expected.toArray()))
-            .body("details.sa.size", equalTo(8));
+            statusCode(expectedStatus).
+            body("total.".concat(nameStartsWithFilters), equalTo(expectedData.size())).
+            body("details.".concat(nameStartsWithFilters), hasItems(expectedData.toArray()));
     }
 
-    @Test
-    public void findAllByContainMoreThanOneWordTest() {
-        List<String> nameStartsWithFilters = Arrays.asList("kor", "amer", "co");
-
-        given().
-            contentType(ContentType.JSON).
-            body(nameStartsWithFilters).
-        when().
-            get("countries/filter-name").
-        then().
-            statusCode(200)
-            .body("details.kor", hasItems("North Korea"))
-            .body("details.kor.size", equalTo(1))
-            .body("details.amer", hasItems("United States of America"))
-            .body("details.amer.size", equalTo(1))
-            .body("details.co", hasItems("Democratic Republic of the Congo"))
-            .body("details.co.size", equalTo(1));
-    }
 }

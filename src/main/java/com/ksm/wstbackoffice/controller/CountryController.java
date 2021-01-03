@@ -7,8 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
@@ -49,7 +49,7 @@ public class CountryController {
     }
 
     @GetMapping("/filter-name")
-    public ResponseEntity<Map<String, Map<String, ?>>> findAllBy(@RequestBody Collection<String> nameStartsWithFilters) {
+    public ResponseEntity<Map<String, Map<String, ?>>> findAllBy(@RequestParam("nameStartsWithFilters") Collection<String> nameStartsWithFilters) {
         if (nameStartsWithFilters.isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
