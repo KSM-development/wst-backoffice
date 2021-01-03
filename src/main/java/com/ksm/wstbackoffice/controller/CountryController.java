@@ -35,9 +35,7 @@ public class CountryController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
 
-        CountryDto country = countryService.findById(id);
-
         return ResponseEntity.status(HttpStatus.OK)
-                .body(country);
+                .body(countryService.findById(id));
     }
 }

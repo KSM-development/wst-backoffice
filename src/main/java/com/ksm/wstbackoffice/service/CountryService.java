@@ -23,6 +23,6 @@ public class CountryService {
 
     public CountryDto findById(String id) {
         return countryMapper.toDto(countryRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Not found country with id = " + id)));
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("Not found country with id %s ", id))));
     }
 }
