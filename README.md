@@ -69,6 +69,10 @@ http://localhost:8081/api/swagger-ui/index.html
 ```
 http://localhost:8081/api/v3/api-docs
 ```
+* swagger version and url
+```
+http://localhost:8081/api/swagger-resources
+```
 
 ## Start the application using docker
 * prerequisites
@@ -170,23 +174,34 @@ It should use the same DB, username and password specified in the `./build-helpe
 
 * run the postgres in the docker. From the project root run the command
 ```
-docker-compose -f ./build-helper/docker-compose-postgres.yml up -d
+docker-compose -f ./build-helper/docker-compose-postgres.yml -p backoffice-project up -d
 ```
 
 * run wst-config-server
+
+* run wst-auth-server (check the wst-auth-server README or documentation how to run it)
 
 * configure the run/debug configuration with the VM options `-Dspring.profiles.active=local,credentials`
 
 * run the app
 
-* check it works - in your browser http://localhost:8081/api/countries
+* check it works
+    * get auth token (check wst-auth-server documentation/README how to do it)
+    * get countries with the retrieved token
+    ```
+    curl --location --request GET 'localhost:8081/api/countries' \
+    --header 'Authorization: Bearer <token>'
+    ```
+    * some URIs are public and are not protected by security. You request them without token, e.g. all swagger URIs (see request above in this README.md)
 
 * shutdown
-    * stop the app by pressing CTRL+C
+    * stop the app
+    * stop wst-auth-server
     * stop wst-config-server
-    * stop postgres in docker
+    * stop auth db postgres in the docker (read wst-auth server how to do it)
+    * stop backoffice db postgres in the docker
     ```
-    docker-compose -f ./build-helper/docker-compose-postgres.yml down
+    docker-compose -f ./build-helper/docker-compose-postgres.yml -p backoffice-project down
     ```
 
 ### Troubleshooting and Tips
