@@ -69,6 +69,10 @@ http://localhost:8081/api/swagger-ui/index.html
 ```
 http://localhost:8081/api/v3/api-docs
 ```
+* swagger version and url
+```
+http://localhost:8081/api/swagger-resources
+```
 
 ## Start the application using docker
 * prerequisites
@@ -188,6 +192,7 @@ docker-compose -f ./build-helper/docker-compose-postgres.yml -p backoffice-proje
     curl --location --request GET 'localhost:8081/api/countries' \
     --header 'Authorization: Bearer <token>'
     ```
+    * some URIs are public and are not protected by security. You request them without token, e.g. all swagger URIs (see request above in this README.md)
 
 * shutdown
     * stop the app
