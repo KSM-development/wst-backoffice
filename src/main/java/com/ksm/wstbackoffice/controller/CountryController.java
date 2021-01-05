@@ -48,15 +48,14 @@ public class CountryController {
                 .body(country);
     }
 
-    @GetMapping("/filter-name")
+    @GetMapping
+    @RequestMapping(params = {"nameStartsWithFilters"})
     public ResponseEntity<Map<String, Map<String, ?>>> findAllBy(@RequestParam("nameStartsWithFilters") Collection<String> nameStartsWithFilters) {
         if (nameStartsWithFilters.isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
 
-        Map<String, Map<String, ?>> filteredCountries = countryService.findAllBy(nameStartsWithFilters);
-
         return ResponseEntity.status(HttpStatus.OK)
-                .body(filteredCountries);
+                .body(countryService.findAllBy(nameStartsWithFilters));
     }
 }

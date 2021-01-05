@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.hasItems;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -40,15 +40,14 @@ public class CountryControllerIT extends BaseControllerIT {
         );
     }
 
-    public static Stream<Arguments> findAllByTestArguments() {
+    public static Stream<Arguments> badArgumentsProvider() {
         return Stream.of(
                 Arguments.of(Arrays.asList(), 400),
-                Arguments.of(Arrays.asList(""), 400),
-                Arguments.of(Arrays.asList("a", "ua", "b"), 200)
+                Arguments.of(Arrays.asList(""), 400)
         );
     }
 
-    public static Stream<Arguments> findAllByFilterNameTestArguments() {
+    public static Stream<Arguments> correctArgumentsProvider() {
         return Stream.of(
                 Arguments.of("amer", Arrays.asList("United States of America"), 200),
                 Arguments.of("kor", Arrays.asList("North Korea"), 200),
@@ -79,27 +78,27 @@ public class CountryControllerIT extends BaseControllerIT {
     }
 
     @ParameterizedTest
-    @MethodSource("findAllByTestArguments")
-    public void findAllByTest(List<String> nameStartsWithFilters, int expectedStatus) {
+    @MethodSource("badArgumentsProvider")
+    public void findAllByBadNameStartsWithFiltersTest(List<String> nameStartsWithFilters, int expectedStatus) {
         given().
             queryParam("nameStartsWithFilters", nameStartsWithFilters).
         when().
-            get("countries/filter-name").
+            get("countries").
         then().
             statusCode(expectedStatus);
     }
 
     @ParameterizedTest
-    @MethodSource("findAllByFilterNameTestArguments")
-    public void findAllByTest(String nameStartsWithFilters, List<String> expectedData, int expectedStatus) {
+    @MethodSource("correctArgumentsProvider")
+    public void findAllByCorrectNameStartsWithFiltersTest(String nameStartsWithFilters, List<String> expectedData, int expectedStatus) {
         given().
             queryParam("nameStartsWithFilters", nameStartsWithFilters).
         when().
-            get("countries/filter-name").
+            get("countries").
         then().
             statusCode(expectedStatus).
             body("total.".concat(nameStartsWithFilters), equalTo(expectedData.size())).
-            body("details.".concat(nameStartsWithFilters), hasItems(expectedData.toArray()));
+            body("details.".concat(nameStartsWithFilters), containsInAnyOrder(expectedData.toArray()));
     }
 
 }
