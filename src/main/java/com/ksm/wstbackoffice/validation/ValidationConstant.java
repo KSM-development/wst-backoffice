@@ -6,4 +6,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ValidationConstant {
     public static final String ONLY_LETTERS_LENGTH_3_REGEX = "[A-Z]{3}";
+    public static final String FILTER_NAME_REGEX = "\\b";
 }

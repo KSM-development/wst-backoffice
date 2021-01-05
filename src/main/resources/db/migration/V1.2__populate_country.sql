@@ -234,7 +234,7 @@ INSERT INTO country (name, alpha2Code, alpha3Code) VALUES
 ,('Ukraine','UA','UKR')
 ,('United Arab Emirates','AE','ARE')
 ,('United Kingdom','GB','GBR')
-,('United States','US','USA')
+,('United States of America','US','USA')
 ,('United States Minor Outlying Islands','UM','UMI')
 ,('Uruguay','UY','URY')
 ,('Uzbekistan','UZ','UZB')

@@ -8,9 +8,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 @RestController
@@ -43,5 +46,16 @@ public class CountryController {
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(country);
+    }
+
+    @GetMapping
+    @RequestMapping(params = {"nameStartsWithFilters"})
+    public ResponseEntity<Map<String, Map<String, ?>>> findAllBy(@RequestParam("nameStartsWithFilters") Collection<String> nameStartsWithFilters) {
+        if (nameStartsWithFilters.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(countryService.findAllBy(nameStartsWithFilters));
     }
 }
